@@ -1,0 +1,9 @@
+TO RUN THE APP: open two terminal tabs and navigate to the root directory of both the frontend and server on both tabs. In their respective terminals, run the commands to start both servers, as follows:
+  Frontend (cd to frontend folder and run in terminal): npm run dev
+  Backend (cd to backend folder): nodemon server
+
+
+
+
+WEBSITE WITH CODE: https://blog.logrocket.com/mern-stack-tutorial/
+https://medium.com/@rajivkhanduja2/how-to-make-a-folder-structure-for-front-end-and-back-end-in-mern-stack-183d25d4de4b
