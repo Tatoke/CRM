@@ -155,3 +155,17 @@ thumb
 sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/react,node
+
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
