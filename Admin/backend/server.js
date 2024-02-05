@@ -1,32 +1,7 @@
 import express from 'express';
-import pgPromise from 'pg-promise'; //lib to work with db; returns data in js - array of objects
-import dotEnv from 'dotenv';
-
-dotEnv.config(); //process.env object has variables from .env file
+import db from './database.js'
 
 
-
-
-
-//---------CONNECTING TO DB SERVER (SUPABASE):----------------------
-const pgp = pgPromise();
-let db;
-let connectionUrl=process.env.CONNECTION_URL_SUPABASE;   
-
-try{
-    db = pgp(connectionUrl);
-    console.log("Database connected successfully");
-}
-catch(err){
-    console.error('Error connecting to the database:', error.message);
-}
-//------------------------------------------------------
-
-
-
-
-
-//START SERVER:
 const app = express();
 const port = 3000; 
 
