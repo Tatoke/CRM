@@ -1,0 +1,6 @@
+For each page in 'pages' folder there must be a .css and .jsx file
+
+Components: is something we will reuse again and again.
+
+Modals: they go inside component folder!
+

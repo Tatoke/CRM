@@ -1,0 +1,1 @@
+// Service Card component (the one that displays Image, title, details about each service)

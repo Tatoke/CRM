@@ -8,3 +8,6 @@ TO RUN THE APP: open two terminal tabs and navigate to the root directory of bot
 
 WEBSITE WITH CODE: https://blog.logrocket.com/mern-stack-tutorial/
 https://medium.com/@rajivkhanduja2/how-to-make-a-folder-structure-for-front-end-and-back-end-in-mern-stack-183d25d4de4b
+
+
+!Important video on project structure and how files work together: https://www.youtube.com/watch?v=R9GZx_MYuV8

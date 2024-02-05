@@ -1,11 +1,11 @@
 import { useState } from 'react'
+// main file of the frontend application that renders the components.
 
 
 
 
 
 
-//ALL other components will go inside App component
 function App() {
  
 
