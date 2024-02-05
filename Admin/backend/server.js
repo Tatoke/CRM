@@ -1,9 +1,10 @@
 import express from 'express';
-import db from './database.js'
+import db from './src/configs/database.js'
 
 
 const app = express();
 const port = 3000; 
+
 
 //-------MIDDLEWARE (placement of this matters!)---------
 app.use(express.json());  //same as body-parser (used to parse incoming JSON requests eg get data from inout fields,  and make the parsed data available in the request.body object )

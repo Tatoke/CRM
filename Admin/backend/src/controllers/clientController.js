@@ -1,0 +1,1 @@
+//actual logic for handling client routes is typically implemented in the corresponding controller file
