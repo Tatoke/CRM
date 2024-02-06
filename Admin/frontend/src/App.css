@@ -1,0 +1,121 @@
+/* STYLES FOR THE WHOLE PROJECT (ALL THE PAGES) */
+
+/* ============= GLOBAL CSS =============== */
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+}
+
+:root{
+   /* COLORS */
+   --primary-500: #645cff;
+   --primary-black: #2A2828;
+   --primary-green: #59BE9C;
+   --primary-yellow:#FFEA9D;
+   --primary-blue: #4270C9;
+   --light-blue: #F0F3FF;
+
+  /* grey */
+  --grey-50: #f8fafc;
+  --grey-100: #f1f5f9;
+  --grey-200: #e2e8f0;
+  --grey-300: #cbd5e1;
+  --grey-400: #94a3b8;
+  --grey-500: #64748b;
+  --grey-600: #475569;
+  --grey-700: #334155;
+  --grey-800: #1e293b;
+  --grey-900: #0f172a;
+
+  /* rest of the colors */
+  --black: #222;
+  --white: #fff;
+  
+
+
+  --small-text: 0.875rem;
+  --extra-small-text: 0.7em;
+
+  --textColor: var(--grey-900);
+  --borderRadius: 0.25rem;
+  --letterSpacing: 1px;
+  --transition: 0.3s ease-in-out all;
+
+
+   /* box shadow*/
+   --shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+   --shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+   --shadow-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
+   --shadow-4: 0 20px 25px -5px rgba(0, 0, 0, 0.1),0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+   /* font weights*/
+   --light:300;
+   --medium:400;
+   --bold:500;
+}
+
+
+
+body{
+    font-family: 'Inter', sans-serif;
+    font-weight: var(--medium);
+    line-height: 1;
+    color: var(--textColor);
+    background-image: url('./assets/images/background1.png');
+    background-size: cover; /* or contain*/
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+p {
+    margin: 0;
+}
+
+h1,h2,h3,h4,h5 {
+  margin: 0;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: capitalize;
+  letter-spacing: var(--letterSpacing);
+}
+
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+
+/* ----LOADING COMPONENT -------------*/
+@keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+.loading {
+    width: 6rem;
+    height: 6rem;
+    border: 5px solid var(--grey-400);
+    border-radius: 50%;
+    border-top-color: var(--primary-500);
+    animation: spinner 0.6s linear infinite;
+    margin: 0 auto;
+}
+/* ----END OF LOADING COMPONENT -------- */
+
+
+
