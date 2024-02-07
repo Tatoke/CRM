@@ -66,8 +66,9 @@ html {
 
 body{
     font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
     font-weight: var(--medium);
-    line-height: 1;
+    line-height: 1.4;
     color: var(--textColor);
     background-image: url('./assets/images/background1.png');
     background-size: cover; /* or contain*/

@@ -1,0 +1,101 @@
+.header {
+    width: 100vw;
+    height: 5rem;
+    padding: 0 5vw;
+    font-size: 16px;
+
+    display: flex;
+    justify-content:space-between;
+    flex-wrap: nowrap;
+    background: #222;
+    align-items: center;
+    color: white;
+    font-weight: 300;
+}
+
+.logo{
+    letter-spacing: 2px;
+}
+
+a, .left {
+    color: white;
+    text-decoration: none;
+    padding: 15px 10px;
+}
+
+
+a:hover{
+    color: #ccc;
+    transition: 0.25s ease-in-out all;
+}
+
+
+
+
+
+
+
+/* Desktop menu */
+/* @media all and (min-width: 960px) { */
+    .username{
+        font-size: 0.8rem;
+        font-weight: 100;
+    }
+
+
+    .center, .right {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    
+    /* to make sure submenu doesnt disappear */
+    .avatar, .notification{
+        height: 100%;
+        
+    }
+    .avatar a , .notification a{
+        display: block;
+        height: 100%;
+
+        /* may need to change this */
+        padding-top: 1.7rem; 
+    }
+   
+
+
+    /* SUBMENU: */
+   .submenu{
+        /* display: none; */
+        opacity: 0;
+        visibility: hidden;
+
+        position: absolute;
+        top: 5rem;
+        background: #222;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        display:block;
+        transition: transform 0.4s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    .has-submenu:hover .submenu{
+        opacity:1;
+        visibility:visible;
+    }
+
+
+    .submenu a{
+        display: block;
+        padding: 5px;
+        margin: 5px;
+        width:120px;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+    .submenu a:hover{
+        background-color: rgba(51, 51, 51, 0.696)
+    }
+
+/* } */
