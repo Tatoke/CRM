@@ -1,11 +1,6 @@
 import React from 'react';
-
+import { Outlet, Link } from 'react-router-dom'; //<Outlet> renders the current route selected.<Link> is used to set the URL 
 import './Header.css'
-
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-
 
 // Icons
 import { RxAvatar } from "react-icons/rx";
@@ -22,39 +17,42 @@ function Header(){
    
 
     return (
+        <>
         <div className="header">
                 <h3 className="logo">Quicksort</h3>
                 
-                <div className="center">
-                    <a href="#">Dashboard</a>
-                    <a href="#">Clients</a>
-                    <a href="#">Services</a>
-                    <a href="#">Finances</a>
+                <ul className="center">
+                    <li><Link to="/">Dashboard</Link></li>
+                    <li><Link to="/clients">Clients</Link></li>
+                    <li><Link to="/services">Services</Link></li>
+                    <li><Link to="/finances">Finances</Link></li>
+                </ul>
+
+
+                <div className="right">
+                        <div className="notification">
+                            <Link to="#"><FaRegBell size="1.3em" /></Link>
+                        </div>
+
+
+                        <div className="avatar has-submenu">
+                            <Link to="#"><RxAvatar className="avatarIcon" size="1.5em"/></Link>
+
+
+                           {/* SUBMENU for Avatar Icon*/}
+                            <ul className="submenu">
+                                <li className="subitem top"><Link to="/profile">My Profile</Link></li>
+                                <li className="subitem "><Link to="/roles">Roles</Link></li>     
+                                <li className="subitem bottom"><Link to="/logout">Logout</Link></li>   
+                            </ul>
+                        </div>
+                            
+                        <div className="username">{name}</div>
                 </div>
-                
-
-            <div className="right">
-                        <div class="notification">
-                            <a href="#"><FaRegBell size="1.2em" /></a>
-                        </div>
-
-
-                        <div class="avatar has-submenu">
-                            <a href="#" ><RxAvatar className="avatarIcon" size="1.4em"/></a>
-
-
-                            {/* SUBMENU for Avatar Icon*/}
-                            <div className="submenu submenu-active">
-                                <a className="subitem" href="#">My Profile</a>
-                                <a className="subitem" href="#">Logout</a>
-                            </div>
-                        </div>
-                        
-
-                        <div class="username">{name}</div>
-            </div>
-
         </div>
+
+        <Outlet />
+        </>
     )
 }
 
