@@ -11,7 +11,7 @@ function AddClient(){
 
     return(
         <div>
-
+            I am Add Client Modal
         </div>
     )
 }

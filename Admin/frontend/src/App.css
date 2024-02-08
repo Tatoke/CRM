@@ -46,7 +46,7 @@ html {
 
   --textColor: var(--grey-900);
   --borderRadius: 0.25rem;
-  --letterSpacing: 1px;
+  --letterSpacing: 0.5px;
   --transition: 0.3s ease-in-out all;
 
 
@@ -78,14 +78,7 @@ body{
 
 p {
     margin: 0;
-}
-
-h1,h2,h3,h4,h5 {
-  margin: 0;
-  font-weight: 500;
-  line-height: 1;
-  text-transform: capitalize;
-  letter-spacing: var(--letterSpacing);
+    color: var(--textColor);
 }
 
 
@@ -98,7 +91,10 @@ ul {
     padding: 0;
 }
 
-
+.page-layout{
+  margin:1.2rem 3rem;
+  padding:1rem;
+}
 
 /* ----LOADING COMPONENT -------------*/
 @keyframes spinner {
@@ -119,4 +115,18 @@ ul {
 /* ----END OF LOADING COMPONENT -------- */
 
 
+
+
+
+/* INPUT TEXT STYLES */
+input[type=text]:focus {
+  border: 0.3px solid #606060;
+}
+input{
+  border: 1px solid #ccc;
+  border-width: 1px;
+  border-radius: 3px;
+  padding-left:  15px;
+  height: 1.8rem;
+}
 
