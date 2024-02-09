@@ -1,0 +1,63 @@
+
+.add-service-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.add-service-dialog h2 {
+  margin-bottom: 10px;
+}
+
+.add-service-dialog label {
+  display: flex;
+  flex-direction: column; 
+  margin-bottom: px; 
+}
+
+.add-service-dialog input,
+.add-service-dialog textarea {
+  width: 100%;
+  padding: 8px; 
+  margin: 2px 0; 
+  box-sizing: border-box;
+}
+
+.add-service-dialog .service-image-placeholder {
+  margin-top: 10px; 
+  margin-bottom: 20px;
+  width: 200px; 
+  height: 150px; 
+  overflow: hidden; 
+  border: 1px solid #ddd; 
+  border-radius: 8px; 
+}
+
+.add-service-dialog .service-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover; 
+}
+
+.add-service-dialog button {
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-top: 10px; 
+  margin-right: 10px;
+}
+
+.add-service-dialog button:hover {
+  background-color: #424649;
+}
+
+.add-service-dialog button:last-child {
+  margin-right: 0;
+}
