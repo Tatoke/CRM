@@ -1,0 +1,167 @@
+
+.service-page {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+.service-box {
+  border: 1px solid #ddd;
+  padding: 20px;
+  background-color: #fff;
+  position: relative; 
+  margin-bottom: 20px;
+}
+
+.service {
+  display: flex;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 20px;
+  background-color: #fff;
+  position: relative;
+}
+
+.dots {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.menu {
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  z-index: 1;
+}
+
+.menu button {
+  width: 100%; 
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.menu button:hover{
+  background-color: #424649;
+}
+
+.add-service {
+  background-color: #000000;
+  color: #ffffff;
+  border: none; 
+  padding: 05px 15px;
+  cursor: pointer;
+  position: absolute;
+  top: 110px;
+  right: 50px;
+}
+
+.add-service:hover {
+  background-color: #424649;
+}
+
+.service-divider {
+  border: 1px solid #ddd;
+  margin: 20px 0;
+}
+
+.confirmation-dialog {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2; 
+}
+
+.confirmation-dialog p {
+  margin-bottom: 20px;
+}
+
+.confirmation-dialog .buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  margin-right: 60px;
+}
+
+.confirmation-dialog button {
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 4px;
+}
+
+.confirmation-dialog button:hover {
+  background-color: #424649;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.service-content {
+  display: flex;
+  align-items: center; 
+}
+
+.service-content .service-image-placeholder {
+  margin-left: 20px;
+  margin-top: 20px;
+  width: 650px; 
+  height: 250px; 
+  max-height: 250px;
+  max-width: 250px;
+  background-color: #f0f0f0; 
+  border: 1px solid #ddd;
+  border-radius: 8px; 
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden; 
+}
+
+.service-content .service-image-placeholder .alt-text {
+  color: #555;
+  font-size: 12px;
+  align-self: center;
+}
+
+.service-image {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px; 
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px; 
+}
+
+.edit-buttons button {
+  flex: 1;
+  margin-right: 10px; 
+  background-color: #000000;
+  color: #fff;
+}
+
+.edit-buttons button:hover{
+  background-color: #424649;
+}
