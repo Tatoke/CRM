@@ -69,7 +69,7 @@ const Service = ({ title, description, imgSrc, onEdit, onDelete }) => {
 
   return (
     <div className="service-box">
-      <h2 className="service-title">{title}</h2>
+      <h4 className="service-title">{title}</h4>
       <div className="service-content">
         {isEditing ? (
           <div>
@@ -123,7 +123,7 @@ const Service = ({ title, description, imgSrc, onEdit, onDelete }) => {
   );
 };
 
-const ServicePage = () => {
+const Services = () => {
   const [services, setServices] = useState([
     { title: 'Web Development', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec fringilla metus. In hac habitasse platea dictumst. Sed at facilisis nulla. Nullam id consectetur ex. Sed hendrerit dapibus lacus, ac hendrerit dui ultrices non. Cras efficitur est a risus suscipit, eu laoreet libero auctor.' },
     { title: 'Digital Marketing', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec fringilla metus. In hac habitasse platea dictumst. Sed at facilisis nulla. Nullam id consectetur ex. Sed hendrerit dapibus lacus, ac hendrerit dui ultrices non. Cras efficitur est a risus suscipit, eu laoreet libero auctor.' },
@@ -169,7 +169,7 @@ const ServicePage = () => {
   
     return (
     <div className="service-page">
-      <h1 className="page-title">Services</h1>
+      <h4 className="page-title">Services</h4>
       <section className="services-box">
         {services.map((service, index) => (
           <div key={index}>
@@ -199,4 +199,4 @@ const ServicePage = () => {
   );
 };
 
-export default ServicePage;
+export default Services;
