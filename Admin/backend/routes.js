@@ -5,7 +5,7 @@ const router = express.Router();
 //IMPORT CONTROLLERS:
 import clientController from './src/controllers/clientController.js';  //set of functions to work with Clients table
 import employeeController from './src/controllers/employeeController.js';  //set of functions to work with employees
-
+import companyController from './src/controllers/companyController.js';
 
 
 
@@ -26,7 +26,7 @@ router.get('/', (req, res) => {       //type http://localhost:3000/ in address l
 //router.get('/clients', clientController.getClients);    //when " http://localhost:3000/clients" route is called -> getClients() function from userController.js file will be executed
 //router.get('/clients/:clientId', clientController.getClientById); 
 router.get('/client', clientController.getClient);  //get client by id, or fname, or lname.
-
+router.post('/clients', clientController.addNewClient);  //add new client to database (AddClientModal.jsx)
 
 
 
@@ -35,7 +35,8 @@ router.post('/employee/login', employeeController.loginEmployee);
 router.post('/employee/logout', employeeController.logoutEmployee); 
 
 
-
+//----------------Company endpoints (need this?)--------------------
+router.get('/companies', companyController.getCompanies); //lists all company names
 
 
 

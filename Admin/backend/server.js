@@ -21,8 +21,8 @@ app.use('/', router); //renders home page
 //app.use("/clients", router); //render all clients
 app.use("/client", router); //find 1 client (by ir, or name, or l name)
 //app.use("/clients/:clientId", router);
-
-
+app.use('/companies',router ); //lists all the companies (used in addNewClientModal)
+app.use('/clients', router);   //add new client to the client table
 
 
 

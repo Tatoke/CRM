@@ -68,6 +68,22 @@ async function getClient(req, res){
 
 
 
+//4. Function to add new client to 'client' table:
+async function addNewClient(req, res){
+    try {
+        const newClientData = req.body; 
+        
+        // Insert new client data into the client table
+        await db.none('INSERT INTO client (fname, mname, lname, phone, email, city, province, companyid, note) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+                       [newClientData.fName, newClientData.mName, newClientData.lName, newClientData.phone, newClientData.email, newClientData.city, newClientData.province, newClientData.company, newClientData.note]);
+        
+        res.status(201).json({ message: 'Client added successfully', data: newClientData });
+
+      } catch (error) {
+        console.error('Error adding client:', error);
+        res.status(500).json({ message: 'Failed to add client' });
+      }
+}
 
 
 
@@ -75,4 +91,5 @@ async function getClient(req, res){
 
 
 
-export default {getClient};
+
+export default {getClient, addNewClient};

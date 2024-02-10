@@ -119,14 +119,17 @@ ul {
 
 
 /* INPUT TEXT STYLES */
-input[type=text]:focus {
-  border: 0.3px solid #606060;
-}
-input{
+input, textarea, select{
   border: 1px solid #ccc;
   border-width: 1px;
-  border-radius: 3px;
+  border-radius: 7px;
   padding-left:  15px;
   height: 1.8rem;
+  margin-top: 5px;
+  height:2rem;
 }
+label{
+  padding-left:3px;
+}
+
 

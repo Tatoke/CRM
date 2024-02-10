@@ -1,5 +1,6 @@
 import React from 'react';
-import AddClientModal from '../../components/AddClient_modal/AddClient'
+import './Clients.css'
+import AddClientModal from '../../components/AddClient_modal/AddClientModal'
 
 import Button from 'react-bootstrap/Button';
 
@@ -12,7 +13,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import './Clients.css'
+
+
 
 
 
@@ -27,10 +29,10 @@ function Clients(props){
 
 
 
-    function handleOpenAddClientModal(){
+    function openModal(){
         setShowAddClientModal(true);  //open modal on 'Add Client' btn clicked
     }
-    function handleCloseAddClientModal(){
+    function closeModal(){
         setShowAddClientModal(false);  //close modal  'Add Client' 
     }
 
@@ -70,25 +72,32 @@ function Clients(props){
             <h4>Clients</h4>
 
             {/* 1. FORM */}
-            <form onSubmit={handleSubmit}>
+            <div className='search-area'>
 
-                <div className='left'>
+                <form onSubmit={handleSubmit} className='left'>
                         <input type='text' name='clientId' id='clientId' value={clientId} onChange={(e)=>setClientId(e.target.value)} placeholder="Client ID"></input>
                         <input type='text' name='clientFirstName' id='clientFirstName' value={clientFirstName} onChange={(e)=>setClientFirstName(e.target.value)} placeholder="First Name"></input>
                         <input type='text'  name='clientLastName' id='clientLastName' value={clientLastName} onChange={(e)=>setClientLastName(e.target.value)} placeholder="Last Name"></input>
                     
                     <Button type='submit' variant="dark" size="sm" >Search</Button>
-                </div>
+                </form>
 
 
                 <div className='right'>
-                    {/* 'Add Client' buttons opens a modal */}
-                    <Button onClick={handleOpenAddClientModal} variant="outline-dark" size="sm">Add Client</Button>
+                    {/* 'Add Client' button opens a modal */}
+                    <Button onClick={openModal} variant="outline-dark" size="sm">Add Client</Button>
                 </div>
 
-                {/* MODAL: shows conditionally */}
-                {showAddClientModal && <AddClientModal />} 
-            </form>
+            </div>
+
+
+
+
+             {/* MODAL: shows conditionally */}
+             {showAddClientModal && <AddClientModal closeModal={closeModal}/>} 
+
+
+
 
 
 
