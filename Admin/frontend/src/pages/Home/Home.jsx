@@ -1,6 +1,7 @@
 // MAIN DASHBOARD PAGE (home page)  
 
 import { React, useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Home.css'
 import AddOrderModal from '../../components/AddOrder_modal/AddOrderModal'
 
@@ -120,11 +121,21 @@ function Home(props){
         //console.log(formData);
     }
 
- 
 
+
+    //redirecting to OrderDetails page when any order name is clicked: (pass orderId too)
+    const navigateTo = useNavigate();
+
+    function handleOrderClick(orderId){
+        console.log(orderId);
+        //return window.location.href = `/orderDetails/${orderId}`;
+
+        navigateTo(`/orderDetails/${orderId}`)
+    }
+
+
+    //=========================================================================================================================================================
     return(
-
-
         <div className="page-layout">
             <h4>Dashboard</h4>
 
@@ -207,8 +218,10 @@ function Home(props){
                     <TableBody>
                         {responseData.map((row, index) => (
                             <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell component="th" scope="row" className="link-cell">{row.ordername}</TableCell>
-                                <TableCell align="right">{row.orderid}</TableCell>
+                                {/* on the page order name is clickable. onClick redirects to Order Details page about this order: (pass id to get details on order Details page) */}
+                                <TableCell component="th" scope="row" className="link-cell" onClick={() => handleOrderClick(row.orderid)}>{row.ordername}</TableCell> 
+
+                                <TableCell align="right">{row.orderid}</TableCell> 
                                 <TableCell align="right">{row.fname + " " + row.lname}</TableCell>
                                 <TableCell align="right">{row.servicename}</TableCell>
                                 <TableCell align="right">{row.statusname}</TableCell>

@@ -7,13 +7,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 //importing pages:
-import Header from './layouts/Header/Header'
-import Home from './pages/Home/Home'
+import Header from './layouts/Header/Header';
+import Home from './pages/Home/Home';
+import OrderDetails from './pages/OrderDetails/OrderDetails';
 import Clients from './pages/Clients/Clients';
-import Services from './pages/Services/Services'
-import Finances from './pages/Finances/Finances'
-import Profile from './pages/Profile/Profile'
-import Roles from './pages/Roles/Roles'  // page to manage RBAC
+import Services from './pages/Services/Services';
+import Finances from './pages/Finances/Finances';
+import Profile from './pages/Profile/Profile';
+import Roles from './pages/Roles/Roles'; // page to manage RBAC
 
 
 
@@ -31,7 +32,11 @@ function App() {
         <Routes>
         
           <Route path="/" element={<Header />}>
+
               <Route index element={<Home />} />
+              <Route path="orderDetails/:orderId" element={<OrderDetails />} />
+
+
               <Route path="clients" element={<Clients />} />
               <Route path="services" element={<Services />} />
               <Route path="finances" element={<Finances />} />
@@ -39,6 +44,7 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="roles" element={<Roles />} />
           </Route>
+
 
         </Routes>
       </BrowserRouter>

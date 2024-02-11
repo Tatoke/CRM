@@ -9,9 +9,9 @@ import db from '../configs/database.js';
 async function getOrder(req, res){
     try {
         let {orderId, orderName, clientName, serviceType, status}=req.query; // Extract query parameters from the request
+        
         //console.log(orderId + " " + orderName +" " + clientName);
         orderName=orderName.toLowerCase(); clientName=clientName.toLowerCase(); serviceType=serviceType.toLowerCase();  status=status.toLowerCase();
-
         //CONSTRUCTING A QUERY:
         let conditions=[];  //used to create dynamic query later;  Construct a query based on the provided parameters
         let fName, lName;
@@ -54,6 +54,7 @@ async function getOrder(req, res){
 
 
 
+
 //2.Adding new order to db (Dahboard -> AddNewOrderModal)
 async function addNewOrder(req, res){
     
@@ -61,5 +62,24 @@ async function addNewOrder(req, res){
 
 
 
+//3.
+async function getOrderBilling(req, res){
+}
 
-export default {getOrder, addNewOrder};
+
+
+//4.
+async function getOrderTimeline(req, res){
+}
+
+//5. 
+async function getOrderDetails(req, res){ 
+    
+    
+
+}
+
+
+
+
+export default {getOrder, addNewOrder, getOrderDetails};

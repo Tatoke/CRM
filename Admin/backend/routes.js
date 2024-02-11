@@ -42,7 +42,7 @@ router.get('/companies', companyController.getCompanies); //lists all company na
 
 
 //----------------Order endpoints--------------------
-router.get('/order', orderController.getOrder); //get order by id, name, client, status etc (Dashboard)
+router.get('/order', orderController.getOrder); //get order by id, name, client, status etc (Dashboard, OrderDetails pages)
 router.post('/orders', orderController.addNewOrder);  //add new order to database 
 
 
