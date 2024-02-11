@@ -1,0 +1,14 @@
+.milestone-section{
+    margin-top:1rem;
+    margin-bottom: 1.5rem;
+}
+
+.milestone-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.milestoneInputField{
+    width:40%;
+}

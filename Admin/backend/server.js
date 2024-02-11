@@ -21,6 +21,7 @@ app.use('/', router); //renders home page
 //app.use("/clients", router); //render all clients
 app.use("/client", router); //find 1 client (by id, or name, or l name)
 app.use("/order", router );  //find 1 order (by id, or name, or client name, service, status) - Dashboard page
+app.use("/orders", router ); //add new order to db (add new order modal)
 //app.use("/clients/:clientId", router);
 app.use('/companies',router ); //lists all the companies (used in addNewClientModal)
 app.use('/clients', router);   //add new client to the client table

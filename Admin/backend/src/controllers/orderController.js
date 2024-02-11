@@ -55,10 +55,41 @@ async function getOrder(req, res){
 
 
 
-//2.Adding new order to db (Dahboard -> AddNewOrderModal)
+//2.Adding new order to db with it's milestones. (Dahboard -> AddNewOrderModal)
 async function addNewOrder(req, res){
+    try {
+        const { orderName, clientId, milestones, serviceType } = req.body; // Extract data about order passed from a form
+    
+        // Insert data into the order table
+        const newOrder = await db.one(
+          'INSERT INTO "order" (clientId, name, serviceid, statusid, balance) VALUES ($1,$2,$3,$4,$5) RETURNING orderid',
+          [clientId, orderName, serviceType, 2, 0.00]
+        );
+    
+
+        //POPULATING MILESTONES FOR THIS ORDER:
+        const orderId = newOrder.orderid; // Get the orderId of the newly inserted order
+        // Insert milestones into the milestone table for the order
+        const milestoneInsertPromises = milestones.map((milestone) => {
+          return db.none(
+            'INSERT INTO milestone (orderid, name) VALUES ($1, $2)',
+            [orderId, milestone]
+          );
+        });
+    
+        // Wait for all milestone insertions to complete
+        await Promise.all(milestoneInsertPromises);
+    
+        res.status(201).json({ message: 'Order added successfully' });
+    } 
+    catch (error) {
+        console.error('Error adding order:', error);
+        res.status(500).json({ error: 'Failed to add order' });
+    }
     
 }
+
+
 
 
 
@@ -82,4 +113,4 @@ async function getOrderDetails(req, res){
 
 
 
-export default {getOrder, addNewOrder, getOrderDetails};
+export default {getOrder, addNewOrder};
