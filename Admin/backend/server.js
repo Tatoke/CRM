@@ -19,7 +19,8 @@ app.use(cors()); // !Enable CORS for all routes (allows for frontend to connect 
 //-------USING ROUTES from routes.jsx -------------------
 app.use('/', router); //renders home page
 //app.use("/clients", router); //render all clients
-app.use("/client", router); //find 1 client (by ir, or name, or l name)
+app.use("/client", router); //find 1 client (by id, or name, or l name)
+app.use("/order", router );  //find 1 order (by id, or name, or client name, service, status) - Dashboard page
 //app.use("/clients/:clientId", router);
 app.use('/companies',router ); //lists all the companies (used in addNewClientModal)
 app.use('/clients', router);   //add new client to the client table

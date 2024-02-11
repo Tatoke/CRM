@@ -6,7 +6,7 @@ const router = express.Router();
 import clientController from './src/controllers/clientController.js';  //set of functions to work with Clients table
 import employeeController from './src/controllers/employeeController.js';  //set of functions to work with employees
 import companyController from './src/controllers/companyController.js';
-
+import orderController from './src/controllers/orderController.js';
 
 
 
@@ -35,11 +35,14 @@ router.post('/employee/login', employeeController.loginEmployee);
 router.post('/employee/logout', employeeController.logoutEmployee); 
 
 
-//----------------Company endpoints (need this?)--------------------
+//----------------Company endpoints--------------------
 router.get('/companies', companyController.getCompanies); //lists all company names
 
 
 
+//----------------Order endpoints--------------------
+router.get('/order', orderController.getOrder); //get order by id, name, client, status etc (Dashboard)
+router.post('/orders', orderController.addNewOrder);  //add new order to database 
 
 
 
