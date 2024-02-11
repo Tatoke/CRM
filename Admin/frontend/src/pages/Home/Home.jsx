@@ -23,6 +23,11 @@ import Paper from '@mui/material/Paper';
 
 function Home(props){
     const[showAddOrderModal, setShowAddOrderModal] = useState(false); //modal is not shown by default
+
+    const [statuses, setStatuses] = useState([]); //list of statuses for select-option input field
+    const [services, setServices] = useState([]); //list of services for select-option input field
+
+
     const [responseData, setResponseData] = useState(null); //data that is returned back from database
     const [formData, setFormData] = useState({
         orderId:'',
@@ -44,6 +49,44 @@ function Home(props){
 
 
 
+     // FETCHING ALL STATUSES FROM BACKEND (for select-option):
+     useEffect(()=>{
+        async function fetchStatusesData(){
+            try{
+                const response = await fetch(`http://localhost:3000/statuses`); //returns all statuses 
+                const data = await response.json();
+                //console.log(data);
+
+                setStatuses(data);
+            } catch(err){
+                console.error('Error fetching statuses:', err); 
+            }
+        }
+
+
+        async function fetchServicesData(){
+            try{
+                const response = await fetch(`http://localhost:3000/services`); //returns all statuses 
+                const data = await response.json();
+                //console.log(data);
+
+                setServices(data);
+            } catch(err){
+                console.error('Error fetching services:', err); 
+            }
+        }
+
+        
+
+        fetchStatusesData();
+        fetchServicesData();
+
+    }, [])
+
+
+
+
+
     //when 'Search' button is pushed -> get form info -> make request to the database
     async function handleSubmit(e){
         e.preventDefault();
@@ -54,7 +97,7 @@ function Home(props){
             const response = await fetch(`http://localhost:3000/order/?orderId=${formData.orderId}&orderName=${formData.orderName}&clientName=${formData.clientName}&serviceType=${formData.serviceType}&status=${formData.status}`);
             const data = await response.json();
             
-            console.log(data);
+            //console.log(data);
             setResponseData(data);  //{fname, lname, orderid, ordername, servicename, statusname }
         }
         catch(err){
@@ -92,8 +135,32 @@ function Home(props){
                         <input type='text' name='orderId' id='orderId' value={formData.orderId}  onChange={handleChange} placeholder="Order ID"></input>
                         <input type='text' name='orderName' id='orderName' value={formData.orderName} onChange={handleChange}  placeholder="Order Name"></input>
                         <input type='text'  name='clientName' id='clientName' value={formData.clientName} onChange={handleChange} placeholder="Client Name"></input>
-                        <input type='text'  name='serviceType' id='serviceType' value={formData.serviceType} onChange={handleChange} placeholder="Service Type"></input>
-                        <input type='text'  name='status' id='status' value={formData.status} onChange={handleChange} placeholder="Status"></input>
+
+
+                        {/* <input type='text'  name='serviceType' id='serviceType' value={formData.serviceType} onChange={handleChange} placeholder="Service Type"></input> */}
+                        {/* SELECT-OPTION FOR SERVICE TYPES: */}
+                        <select value={formData.serviceType} onChange={handleChange} name='serviceType' id='serviceType' style={{width: "213.44px", marginRight: "17px"}} >
+                            <option value="" disabled hidden>Service Type</option>
+                            {
+                                services.map((service, index)=>{
+                                    return  <option key={index} value={service.name}>{service.name}</option>
+                                })
+                            }
+                        </select>
+                        
+                        
+
+
+                        {/* <input type='text'  name='status' id='status' value={formData.status} onChange={handleChange} placeholder="Status"></input> */}
+                        {/* SELECT-OPTION FOR STATUSES: */}
+                        <select value={formData.status} onChange={handleChange} name='status' id='status' style={{width: "213.44px", marginRight: "17px"}} >
+                            <option value="" disabled hidden>Status</option>
+                            {
+                                statuses.map((status, index)=>{
+                                    return  <option key={index} value={status.name}>{status.name}</option>
+                                })
+                            }
+                        </select>
 
                     
                     <Button type='submit' variant="dark" size="sm" >Search</Button>
@@ -127,7 +194,7 @@ function Home(props){
                         <TableRow>
                             <TableCell style={{fontWeight: 'bold'}}>Order</TableCell>
                             <TableCell align="right" style={{fontWeight: 'bold'}}>Order ID</TableCell>
-                            <TableCell align="right" style={{fontWeight: 'bold'}}>Client ID</TableCell>
+                            <TableCell align="right" style={{fontWeight: 'bold'}}>Client</TableCell>
                             <TableCell align="right" style={{fontWeight: 'bold'}}>Service</TableCell>
                             <TableCell align="right" style={{fontWeight: 'bold'}}>Status</TableCell>
                             <TableCell align="right" style={{fontWeight: 'bold'}}>Balance (CAD)</TableCell>
@@ -140,7 +207,7 @@ function Home(props){
                     <TableBody>
                         {responseData.map((row, index) => (
                             <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell component="th" scope="row">{row.ordername}</TableCell>
+                                <TableCell component="th" scope="row" className="link-cell">{row.ordername}</TableCell>
                                 <TableCell align="right">{row.orderid}</TableCell>
                                 <TableCell align="right">{row.fname + " " + row.lname}</TableCell>
                                 <TableCell align="right">{row.servicename}</TableCell>

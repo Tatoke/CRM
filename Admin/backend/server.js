@@ -24,9 +24,8 @@ app.use("/order", router );  //find 1 order (by id, or name, or client name, ser
 //app.use("/clients/:clientId", router);
 app.use('/companies',router ); //lists all the companies (used in addNewClientModal)
 app.use('/clients', router);   //add new client to the client table
-
-
-
+app.use('/statuses', router); //select all the statuses from status table (Dashboard page select-option)
+app.use('/services', router)  //select all the services from service table (Dashboard page select-option)
 
 
 

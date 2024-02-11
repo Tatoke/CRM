@@ -7,7 +7,8 @@ import clientController from './src/controllers/clientController.js';  //set of 
 import employeeController from './src/controllers/employeeController.js';  //set of functions to work with employees
 import companyController from './src/controllers/companyController.js';
 import orderController from './src/controllers/orderController.js';
-
+import statusController from './src/controllers/statusController.js';
+import serviceController from './src/controllers/serviceController.js';
 
 
 
@@ -43,6 +44,19 @@ router.get('/companies', companyController.getCompanies); //lists all company na
 //----------------Order endpoints--------------------
 router.get('/order', orderController.getOrder); //get order by id, name, client, status etc (Dashboard)
 router.post('/orders', orderController.addNewOrder);  //add new order to database 
+
+
+
+
+
+
+//----------------STATUS endpoints--------------------
+router.get('/statuses', statusController.getStatuses); //lists all statuses (Dashboard select-option )
+
+
+//----------------SERVICE endpoints--------------------
+router.get('/services', serviceController.getServices); //lists all statuses (Dashboard select-option )
+
 
 
 

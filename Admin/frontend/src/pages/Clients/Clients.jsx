@@ -122,7 +122,7 @@ function Clients(props){
                     <TableBody>
                         {responseData.map((row, index) => (
                             <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell component="th" scope="row">{row.fname + " "+ row.lname}</TableCell>
+                                <TableCell component="th" scope="row"  className="link-cell">{row.fname + " "+ row.lname}</TableCell>
                                 <TableCell align="right">{row.clientid}</TableCell>
                                 <TableCell align="right">{row.email}</TableCell>
                                 <TableCell align="right">{row.phone}</TableCell>

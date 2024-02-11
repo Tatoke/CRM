@@ -123,7 +123,7 @@ input, textarea, select{
   border: 1px solid #ccc;
   border-width: 1px;
   border-radius: 7px;
-  padding-left:  15px;
+  padding-left:  17px;
   height: 1.8rem;
   margin-top: 5px;
   height:2rem;
@@ -133,3 +133,21 @@ label{
 }
 
 
+
+/* 
+IF WANT TEXT BEHAVE LIKE A LINK: */
+.link-cell {
+  cursor: pointer; /* Show pointer cursor on hover */
+  text-decoration: underline; /* Underline the text */
+}
+
+/* Remove default link styles for table cells */
+.link-cell:hover, .link-cell:active {
+  text-decoration: none;
+  color: blue;
+}
+
+/* Style the link-like table cell when hovered */
+.link-cell:hover {
+  color: darkblue; /* Darken text color on hover */
+}
