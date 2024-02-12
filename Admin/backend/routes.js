@@ -9,6 +9,7 @@ import companyController from './src/controllers/companyController.js';
 import orderController from './src/controllers/orderController.js';
 import statusController from './src/controllers/statusController.js';
 import serviceController from './src/controllers/serviceController.js';
+import billingController from './src/controllers/billingController.js';
 
 
 
@@ -44,6 +45,16 @@ router.get('/companies', companyController.getCompanies); //lists all company na
 //----------------Order endpoints--------------------
 router.get('/order', orderController.getOrder); //get order by id, name, client, status etc (Dashboard, OrderDetails pages)
 router.post('/orders', orderController.addNewOrder);  //add new order to database 
+router.get('/billing/:orderId', billingController.getOrderBilling); //billing info about particular order
+router.get('timeline/:orderId', orderController.getOrderTimeline); //gets milestones + updates + employees who  made updates with dates for an orderId
+router.get('/orderdetails/:orderId', orderController.getOrderDetails); //gets order details (id, client, status, service type, userEmail for request info modal)
+    
+
+
+
+
+
+
 
 
 

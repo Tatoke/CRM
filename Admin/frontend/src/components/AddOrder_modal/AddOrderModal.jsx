@@ -114,7 +114,7 @@ function AddOrderModal({closeModal}){
           
           <div key={index} style={{margin:"0.5rem"}}>
             <label htmlFor={milestone} style={{marginRight:"1rem"}}>Milestone {index+1} </label>
-            <input type="text" value={milestone} onChange={(e) => handleMilestoneChange(index, e.target.value)} className='milestoneInputField' required={index === 0} />
+            <input type="text" value={milestone} onChange={(e) => handleMilestoneChange(index, e.target.value)} className='milestoneInputField' required />
           </div>
 
         ));

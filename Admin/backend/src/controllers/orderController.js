@@ -70,10 +70,10 @@ async function addNewOrder(req, res){
         //POPULATING MILESTONES FOR THIS ORDER:
         const orderId = newOrder.orderid; // Get the orderId of the newly inserted order
         // Insert milestones into the milestone table for the order
-        const milestoneInsertPromises = milestones.map((milestone) => {
+        const milestoneInsertPromises = milestones.map((milestone, index) => {
           return db.none(
-            'INSERT INTO milestone (orderid, name) VALUES ($1, $2)',
-            [orderId, milestone]
+            'INSERT INTO milestone (orderid, name, ordermilestonenumber) VALUES ($1, $2, $3)',
+            [orderId, milestone, index+1]
           );
         });
     
@@ -93,24 +93,22 @@ async function addNewOrder(req, res){
 
 
 
-//3.
-async function getOrderBilling(req, res){
-}
 
 
 
 //4.
-async function getOrderTimeline(req, res){
+async function getOrderTimeline(req, res){ //gets milestones + updates + employees who  made updates with dates for an orderId
+    const orderId = req.params.orderId;
 }
+
 
 //5. 
-async function getOrderDetails(req, res){ 
+async function getOrderDetails(req, res){ //gets order details (id, client, status, service type, userEmail for request info modal)
+    const orderId = req.params.orderId;
     
-    
-
 }
 
 
 
 
-export default {getOrder, addNewOrder};
+export default {getOrder, addNewOrder, getOrderDetails, getOrderTimeline};

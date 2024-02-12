@@ -9,18 +9,20 @@ import Button from 'react-bootstrap/Button';
 
 function OrderDetails(props){
     const { orderId } = useParams(); //ORDER ID 
+    const [balance, setBalance] = useState(0);
 
     const [statuses, setStatuses] = useState([]);  //list of statuses for an order (select-option)
-    const [responseOrderData, setResponseOrderData] = useState(null); //data that is returned back from database
+    const [billingData, setBillingData] = useState([]);
 
 
-     // FETCHING ALL ORDER INFORMATION, STATUSES FROM BACKEND (for select-option):
+
+     // FETCHING ALL ORDER INFORMATION, BILLING DATA, TIMELINE, STATUSES FROM BACKEND (for select-option):
      useEffect(()=>{
         async function fetchStatusesData(){
             try{
                 const response = await fetch(`http://localhost:3000/statuses`); //returns all statuses 
                 const data = await response.json();
-                console.log(data);
+                //console.log(data);
 
                 setStatuses(data);
             } catch(err){
@@ -30,31 +32,46 @@ function OrderDetails(props){
 
 
 
-
-        //!!!need to change to order billing history and timeline:
-        async function fetchOrderData(){ //(will need to fetch several different endpoints separately in here : billing, timiline, order details)
+        async function fetchBillingData(){ //info about all invoices (including unpaid ones) and receipts
             try{
                 //console.log(orderId);
-                const response = await fetch(`http://localhost:3000/order/?orderId=${orderId}&orderName=null&clientName=null&serviceType=null`); //returns basic order details
-                const data = await response.json();
-                console.log(data);
+                const response = await fetch(`http://localhost:3000/billing/${orderId}`); 
+                const billingData = await response.json();
+                //console.log(billingData);
 
-                setResponseOrderData(data);
+                setBillingData(billingData);
+
             } catch(err){
-                console.error('Error fetching statuses:', err); 
+                console.error('Error fetching billing data:', err); 
             }
-
         }
 
-
-        
         fetchStatusesData();
-        fetchOrderData();
-    }, [])
+        fetchBillingData();
+    }, [orderId]) //ensures that the effect is re-run whenever orderId changes.
 
 
 
 
+    useEffect(() => {
+        function calculateBalance() {
+            let invoiceSum = 0;
+            let receiptSum = 0;
+    
+            billingData.forEach(row => {
+                invoiceSum += parseFloat(row.amountdue);
+                if (row.amountpaid) receiptSum += parseFloat(row.amountpaid);
+            });
+    
+            setBalance(invoiceSum - receiptSum);
+        }
+    
+        if (billingData.length > 0) {
+            calculateBalance();
+        }
+    }, [billingData]); // Calculate balance whenever billingData changes
+    
+  
 
 
 
@@ -115,11 +132,95 @@ function OrderDetails(props){
 
                         {/* BOX 2 */}
                         <div className="order-billing box">
-                        <h5>Billing History</h5>
-                        <hr />
+                            <h5>Billing History</h5>
+                            <hr />
+                            
+                            
+                            <div className="balance">
+                                <div className='balance-title'>
+                                    <h6>Balance</h6>
+                                    <b>{balance} CAD</b>
+                                </div>
 
+                                
+                                {billingData.map((row, index)=>{
+                                    if(!row.amountpaid) return <i key={index}>Payment required by {row.duedate.substring(0,10)}</i>
+
+                                })
+
+                                }
+
+                            </div>
+                            
+                                                      
+                            
+                            <hr />
+
+
+
+                            {/* <h6 style={{marginBottom:"1rem"}}>Invoices</h6> */}
+                            {billingData ? (
+                                <div className='billing-table'>
+                                    <div>
+                                    <b>Invoice</b>
+                                        {billingData.map((row, index)=>{
+                                                        return (
+                                                            <p key={index} className="billing-tb-cell">#{row.invoiceid}</p>
+                                                            
+                                                        )
+                                                })
+                                            }
+
+                                    </div>
+
+
+
+
+                                    <div>
+                                    <b>Due Date</b>
+                                        { billingData.map((row, index)=>{
+                                                        return (
+                                                            <p key={index} className="billing-tb-cell">{row.duedate.substring(0,10)}</p>
+                                                            
+                                                        )
+                                                })
+                                        }
+                                    </div>
+
+
+                                    <div>
+                                    <b>Receipt</b>
+                                        {billingData.map((row, index)=>{
+                                                        return (
+                                                            <p key={index} className="billing-tb-cell">{row.receiptid ? '#' : ''}{row.receiptid}</p>
+                                                            
+                                                        )
+                                                })
+                                        }
+                                    </div>
+
+
+
+                                    <div>
+                                    <b>Amount</b>
+                                        {billingData.map((row, index)=>{
+                                                    if(row.receiptid != null)
+                                                        return (
+                                                            <p key={index} style={{color:"#59BE9C"}} className="billing-tb-cell">PAID</p>  
+                                                        )
+                                                    else return (
+                                                            <p key={index} style={{color:"red"}} className="billing-tb-cell">{row.amountdue}</p>
+                                                            
+                                                    )
+                                             }
+                                            )
+                                        }
+                                    </div>
+                                    
+                                </div>
+                            ) : <p className="loading"></p>}
+                                   
                         </div>  
-
                 </div>
                 
 
