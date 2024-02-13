@@ -87,9 +87,14 @@ function Profile(props) {
     });
   };
 
-  const openModal = () => {
+  const deleteModal = () => {
     // Displaying a simple alert message
-    alert("Modal will open to add a client.");
+    alert("Modal will open to delete a client.");
+  };
+
+  const passwordModal = () => {
+    // Displaying a simple alert message
+    alert("Modal will open to change password.");
   };
 
   return (
@@ -98,15 +103,18 @@ function Profile(props) {
 
     <div className="container">
       <div className="profile">
-      <h4>Profile</h4>
+      <h5>Profile</h5>
         <div className="profile-info-header">
             <div className="profile-picture">
               <RxAvatar />
             </div>
             <div className="profile-info-header-content">
-              <h4>{personalInfo.fullName}</h4>
-              <h5>{personalInfo.primaryemail}</h5>
+              <h6>{personalInfo.fullName}</h6>
+              <h6>{personalInfo.primaryemail}</h6>
             </div>
+            <Button className="deletebutton" onClick={deleteModal} variant="dark" size="sm">
+            <h7>Delete Client</h7>
+            </Button>
         </div>
       </div>
 
@@ -150,7 +158,7 @@ function Profile(props) {
       </div>
       
 
-      <h4>Company</h4>
+      <h5>Company</h5>
       <div className="profile-info-content2">
         <div className="profile-info-content-1">
           <div className="profile-info-content-field">
@@ -198,14 +206,14 @@ function Profile(props) {
             />
       </div>
 
-      <h4>Security</h4>
+      <h5>Security</h5>
       <div className="profile-info-content3">
         <div className="security-info">
           <h6>Password</h6>
-          <p>Last changed 2 days ago</p>
+          <h7>Last changed 2 days ago</h7>
         </div>
-        <Button onClick={openModal} variant="outline-dark" size="sm">
-            Change Password
+        <Button className="passwordbutton" onClick={passwordModal} variant="outline-dark" size="sm">
+            <h7>Change Password</h7>
         </Button>
       </div>
     </div>
