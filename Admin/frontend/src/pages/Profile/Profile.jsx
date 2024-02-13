@@ -3,6 +3,9 @@ import "./Profile.css";
 import { RxAvatar } from "react-icons/rx";
 import { PiNotePencilBold } from "react-icons/pi";
 import Button from "react-bootstrap/Button";
+import { useParams } from 'react-router-dom'; 
+
+
 
 const ProfileField = ({ label, value, onChange, editable }) => (
   <div className="field">
@@ -27,7 +30,20 @@ const ProfileTextArea = ({ label, value, onChange, editable }) => (
   </div>
 );
 
-function Profile() {
+
+
+
+
+
+function Profile(props) {
+  //INGA'S NOTE FOR JUSTIN:--------------------------
+  const { userType, userId } = useParams(); //userType can be either a 'client' or 'employee'. According to this info -> extract data from specified table according to the userId
+  //use useEffect() React hook in this component to make a request to backend.
+  //will have to use if-else to parse appropriate endpoint (either one to parse client table or to parse employee table)
+  //use conditional rendering: if user if Employee => dont show company and list of orders.
+  //-------------------------------------------------
+
+
   const [personalInfo, setPersonalInfo] = useState({
     fullName: "John Swarowski",
     primaryemail: "Johnswarowski@gmail.com",
@@ -78,6 +94,8 @@ function Profile() {
 
   return (
   <>
+ 
+
     <div className="container">
       <div className="profile">
       <h4>Profile</h4>

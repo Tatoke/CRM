@@ -47,8 +47,8 @@ router.get('/order', orderController.getOrder); //get order by id, name, client,
 router.post('/orders', orderController.addNewOrder);  //add new order to database 
 router.get('/billing/:orderId', billingController.getOrderBilling); //billing info about particular order
 router.get('timeline/:orderId', orderController.getOrderTimeline); //gets milestones + updates + employees who  made updates with dates for an orderId
-router.get('/orderdetails/:orderId', orderController.getOrderDetails); //gets order details (id, client, status, service type, userEmail for request info modal)
-    
+router.get('/order/:orderId', orderController.getOrderDetails); //gets order details (id, client, status, service type, userEmail for request info modal)
+
 
 
 

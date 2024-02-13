@@ -33,7 +33,7 @@ async function getOrder(req, res){
 
          // Construct the WHERE clause using the conditions array
          const whereClause = conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : '';
-         const query = `SELECT o.orderid, o.name AS orderName, c.fname, c.lname, s.name AS serviceName, st.name AS statusName, o.balance, o.createdat
+         const query = `SELECT o.orderid, o.name AS orderName, c.clientid, c.fname, c.lname, s.name AS serviceName, st.name AS statusName, o.balance, o.createdat
          FROM 
          "order" o INNER JOIN client c ON o.clientid = c.clientid
          INNER JOIN status st ON o.statusid = st.statusId
@@ -58,27 +58,34 @@ async function getOrder(req, res){
 //2.Adding new order to db with it's milestones. (Dahboard -> AddNewOrderModal)
 async function addNewOrder(req, res){
     try {
-        const { orderName, clientId, milestones, serviceType } = req.body; // Extract data about order passed from a form
-    
+        const { orderName, clientId, milestones, serviceType } = req.body; // Extract data about order (from frontend) passed from a form
+
+
+        
         // Insert data into the order table
         const newOrder = await db.one(
           'INSERT INTO "order" (clientId, name, serviceid, statusid, balance) VALUES ($1,$2,$3,$4,$5) RETURNING orderid',
           [clientId, orderName, serviceType, 2, 0.00]
         );
-    
+
+
 
         //POPULATING MILESTONES FOR THIS ORDER:
         const orderId = newOrder.orderid; // Get the orderId of the newly inserted order
         // Insert milestones into the milestone table for the order
+        //by default, milestones are assigned to an order, non of them are active unless added to timeline -> all milestones for the order are set to iscurrentmilestone=false
+        //startedat = null for all milestones at the creating of an order. Neeed to add milestone to timeline to make the milestone active
         const milestoneInsertPromises = milestones.map((milestone, index) => {
           return db.none(
-            'INSERT INTO milestone (orderid, name, ordermilestonenumber) VALUES ($1, $2, $3)',
-            [orderId, milestone, index+1]
+            'INSERT INTO milestone (orderid, name, ordermilestonenumber, iscurrentmilestone) VALUES ($1, $2, $3, $4)',
+            [orderId, milestone, index+1, false]
           );
         });
     
         // Wait for all milestone insertions to complete
         await Promise.all(milestoneInsertPromises);
+    
+
     
         res.status(201).json({ message: 'Order added successfully' });
     } 
@@ -102,9 +109,23 @@ async function getOrderTimeline(req, res){ //gets milestones + updates + employe
 }
 
 
-//5. 
+//5. Order Details page - Order Details box: (order id, client name, id, service, status)
 async function getOrderDetails(req, res){ //gets order details (id, client, status, service type, userEmail for request info modal)
     const orderId = req.params.orderId;
+
+
+    try {
+        const query = `SELECT o.orderid, client.clientid, client.fname, client.lname, o.createdat, service.name AS servicename, status.name AS statusname FROM "order" o INNER JOIN client ON o.clientid=client.clientid 
+        INNER JOIN  service ON service.serviceid=o.serviceid INNER JOIN status ON status.statusid=o.statusid WHERE orderId = $1`;
+        const orderDetailsData = await db.one(query, orderId);  // Execute the query with orderId as a parameter
+        
+        res.json(orderDetailsData);
+        //console.log(orderDetailsData);
+
+    } catch (err) {
+        console.error('Error fetching order details info:', err);
+        res.status(500).json({ err: 'Internal Server Error: could not fetch order details' });
+    }
     
 }
 

@@ -36,12 +36,16 @@ function App() {
               <Route index element={<Home />} />
               <Route path="orderDetails/:orderId" element={<OrderDetails />} />
 
+              {/* userTyoe can be either "employee" or "client" */}
+              <Route path="profile/:userType/:userId" element={<Profile />} /> 
+
+
 
               <Route path="clients" element={<Clients />} />
               <Route path="services" element={<Services />} />
               <Route path="finances" element={<Finances />} />
               
-              <Route path="profile" element={<Profile />} />
+              {/* <Route path="profile" element={<Profile />} /> */}
               <Route path="roles" element={<Roles />} />
           </Route>
 

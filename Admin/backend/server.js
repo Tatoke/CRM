@@ -30,8 +30,8 @@ app.use('/services', router)  //select all the services from service table (Dash
 
 app.use('/billing/:orderId', router); //billing info about particular order
 app.use('/timeline/:orderId', router); //gets milestones + updates + employees who  made updates with dates for an orderId
-app.use('/orderdetails/:orderId', router); //gets order details (id, client, status, service type, userEmail for request info modal)
-    
+app.use('/order/:orderId', router); //gets order details (id, client, status, service type, userEmail for request info modal)
+
 
 
 

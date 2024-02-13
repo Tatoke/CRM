@@ -115,8 +115,8 @@ hr {
   }
 
 .order-details-status-option{
-    color:var(--primary-green);
-    font-weight:500;
-    font-size: 1.15rem;
+    color:#007bff;
+    font-weight:400;
+    font-size: 1rem;
     
 }

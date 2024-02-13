@@ -2,17 +2,19 @@ import {React, useEffect, useState} from 'react';
 import './OrderDetails.css'
 import { useParams } from 'react-router-dom'; 
 import Button from 'react-bootstrap/Button';
-
-
+import { Link } from 'react-router-dom'; //for redirecting to client profile page
 
 
 
 function OrderDetails(props){
-    const { orderId } = useParams(); //ORDER ID 
-    const [balance, setBalance] = useState(0);
+     const { orderId } = useParams(); //ORDER ID 
+     const [balance, setBalance] = useState(0);
 
-    const [statuses, setStatuses] = useState([]);  //list of statuses for an order (select-option)
-    const [billingData, setBillingData] = useState([]);
+     const [statuses, setStatuses] = useState([]);  //list of statuses for an order (select-option)
+     const [billingData, setBillingData] = useState([]);
+     const[orderData, setOrderData] = useState({});   //doesnt include timeline 
+
+
 
 
 
@@ -46,7 +48,25 @@ function OrderDetails(props){
             }
         }
 
+
+        async function fetchOrderData(){
+            try{
+                //console.log(orderId);
+                const response = await fetch(`http://localhost:3000/order/${orderId}`); 
+                const orderData = await response.json();
+                console.log(orderData);   //{clientid, createdat, fname, lname, orderid, servicename, statusname}
+
+                setOrderData(orderData);
+                
+            } catch(err){
+                console.error('Error fetching order data:', err); 
+            }
+        }
+
+
+        
         fetchStatusesData();
+        fetchOrderData();
         fetchBillingData();
     }, [orderId]) //ensures that the effect is re-run whenever orderId changes.
 
@@ -95,17 +115,22 @@ function OrderDetails(props){
                            <div className='order-information'>
                                     <div className='order-information-row'>
                                         <p className='title'>Order ID</p>
-                                        <p>#1111</p>
+                                        <p>#{orderId}</p>
                                     </div>
 
                                     <div className='order-information-row'>
                                         <p className='title'>Client ID</p>
-                                        <p>#id</p>
+                                        <p>#{orderData.clientid}</p>
+                                    </div>
+
+                                    <div className='order-information-row'>
+                                        <p className='title'>Client Name</p>
+                                        <Link to={`/profile/client/${encodeURIComponent(orderData.clientid)}`} className="custom-link">{orderData.fname + " "+orderData.lname}</Link>
                                     </div>
 
                                     <div className='order-information-row'>
                                         <p className='title'>Service Type</p>
-                                        <p>Website Development</p>
+                                        <p>{orderData.servicename}</p>
                                     </div>
 
 
@@ -115,7 +140,7 @@ function OrderDetails(props){
 
                                     <div className='order-buttons'>
                                         <select name='status' id='status'  className='order-details-status-option'>
-                                            <option value="">Current Status</option>
+                                            <option value="">{orderData.statusname}</option>
                                             {
                                                 statuses.map((status, index)=>{
                                                     return  <option key={index} value={status.name}>{status.name}</option>
