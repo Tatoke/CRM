@@ -168,8 +168,8 @@ const Services = () => {
   
   
     return (
-    <div className="service-page">
-      <h4 className="page-title">Services</h4>
+    <div className="service">
+      <h4 className="page-title" >Services</h4>
       <section className="services-box">
         {services.map((service, index) => (
           <div key={index}>
