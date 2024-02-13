@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom'; //<Outlet> renders the current route selected.<Link> is used to set the URL 
+import { Outlet, Link, useParams } from 'react-router-dom'; //<Outlet> renders the current route selected.<Link> is used to set the URL 
 import './Header.css'
 
 // Icons
@@ -10,7 +10,9 @@ import { FaRegBell } from "react-icons/fa";
 
 
 
-function Header(){
+
+function Header(){   //HOLDS INFO ABOUT epmloyeeId logged in
+
     const [name, setName] = React.useState("John Swarowski");
 
 
@@ -41,7 +43,9 @@ function Header(){
 
                            {/* SUBMENU for Avatar Icon*/}
                             <ul className="submenu">
-                                <li className="subitem top"><Link to="/profile">My Profile</Link></li>
+                                {/* the endpoint opens profile page customized for employee */}
+                                <li className="subitem top"><Link to="/profile/employee/:userId">My Profile</Link></li> 
+
                                 <li className="subitem "><Link to="/roles">Roles</Link></li>     
                                 <li className="subitem bottom"><Link to="/logout">Logout</Link></li>   
                             </ul>

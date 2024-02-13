@@ -29,12 +29,14 @@ router.get('/', (req, res) => {       //type http://localhost:3000/ in address l
 //router.get('/clients/:clientId', clientController.getClientById); 
 router.get('/client', clientController.getClient);  //get client by id, or fname, or lname.
 router.post('/clients', clientController.addNewClient);  //add new client to database (AddClientModal.jsx)
-
+router.get("/clients/:clientId", clientController.getClientCompanyOrderListInfo); //gets client, company, order list info for client profile page
 
 
 //----------------EMPLOYEE endpoints (need this?)--------------------
-router.post('/employee/login', employeeController.loginEmployee); 
-router.post('/employee/logout', employeeController.logoutEmployee); 
+//router.post('/employee/login', employeeController.loginEmployee); 
+//router.post('/employee/logout', employeeController.logoutEmployee); 
+router.get('employees/:employeeId', employeeController.getEmployeeOrderInfo); //gets all info about particular employee and orders that he works on (for Profile page)
+
 
 
 //----------------Company endpoints--------------------

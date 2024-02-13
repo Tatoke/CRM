@@ -19,10 +19,16 @@ async function logoutEmployee(req, res){
 
 
 
+//JUSTIN:
+//3. Enpoint passed form frontedn: 'employees/:employeeId
+//gets all info about particular employee and orders that he works on (for Profile page)
+async function getEmployeeOrderInfo(req, res){
+    const employeeId = req.params.employeeId; //passed from 'employees/:employeeId'
+
+}
 
 
 
 
 
-
-export default {loginEmployee,logoutEmployee};
+export default {loginEmployee,logoutEmployee, getEmployeeOrderInfo};

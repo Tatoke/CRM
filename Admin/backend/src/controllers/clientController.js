@@ -88,8 +88,14 @@ async function addNewClient(req, res){
 
 
 
+//JUSTIN:
+//5. gets client, company, order list info for client profile page. Enpoint from frontend: "/clients/:clientId"
+async function getClientCompanyOrderListInfo(req, res){
+    const clientId = req.params.clientId;
+
+}
 
 
 
 
-export default {getClient, addNewClient};
+export default {getClient, addNewClient,getClientCompanyOrderListInfo};

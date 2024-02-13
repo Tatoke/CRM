@@ -34,6 +34,9 @@ app.use('/order/:orderId', router); //gets order details (id, client, status, se
 
 
 
+app.use('/employees/:employeeId', router); //gets all info about particular employee and orders that he works on (for Profile page)
+app.use('/clients/:clientId', router); //gets client, company, order list info for client profile page
+
 
 
 
