@@ -109,13 +109,13 @@ async function getOrderTimeline(req, res){ //gets milestones + updates + employe
 }
 
 
-//5. Order Details page - Order Details box: (order id, client name, id, service, status)
+//5. Order Details page - Order Details box: (order id, order name, client name, id, service, status)
 async function getOrderDetails(req, res){ //gets order details (id, client, status, service type, userEmail for request info modal)
     const orderId = req.params.orderId;
 
 
     try {
-        const query = `SELECT o.orderid, client.clientid, client.fname, client.lname, o.createdat, service.name AS servicename, status.name AS statusname FROM "order" o INNER JOIN client ON o.clientid=client.clientid 
+        const query = `SELECT o.orderid, o.name, client.clientid, client.fname, client.lname, o.createdat, service.name AS servicename, status.name AS statusname FROM "order" o INNER JOIN client ON o.clientid=client.clientid 
         INNER JOIN  service ON service.serviceid=o.serviceid INNER JOIN status ON status.statusid=o.statusid WHERE orderId = $1`;
         const orderDetailsData = await db.one(query, orderId);  // Execute the query with orderId as a parameter
         
@@ -131,5 +131,32 @@ async function getOrderDetails(req, res){ //gets order details (id, client, stat
 
 
 
+//6. Order Details page - Update order status 
+async function updateOrderStatus(req, res){
+    const { status } = req.body; //statusName
+    const orderId = req.params.orderId;
 
-export default {getOrder, addNewOrder, getOrderDetails, getOrderTimeline};
+    // console.log(orderId);//12
+    // console.log(status);// To Do
+    try {
+        const statusId = await db.oneOrNone('SELECT statusid FROM status WHERE name = $1', [status]);
+        
+        if (!statusId) {
+          return res.status(404).json({ error: 'Status not found' });
+        }
+    
+        // Update the order status in the database
+        await db.none('UPDATE "order" SET statusid = $1 WHERE orderid = $2', [statusId.statusid, orderId]);
+    
+        res.json({ message: 'Order status was updated' });
+      } catch (error) {
+        console.error('Error updating order status:', error);
+        res.status(500).json({ error: 'Internal server error' });
+      }
+}
+
+
+
+
+
+export default {getOrder, addNewOrder, getOrderDetails, getOrderTimeline, updateOrderStatus};

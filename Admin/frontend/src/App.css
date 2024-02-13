@@ -92,7 +92,7 @@ ul {
 }
 
 .page-layout{
-  margin:1.2rem 3rem;
+  margin:2.5rem 4rem;
   padding:1rem;
 }
 
@@ -144,13 +144,14 @@ IF WANT TEXT BEHAVE LIKE A LINK: */
 /* Remove default link styles for table cells */
 .link-cell:hover, .link-cell:active {
   text-decoration: none;
-  color: blue;
+  color: #007bff;
 }
 
 /* Style the link-like table cell when hovered */
 .link-cell:hover {
   color: darkblue; /* Darken text color on hover */
 }
+
 
 
 
@@ -164,4 +165,8 @@ IF WANT TEXT BEHAVE LIKE A LINK: */
 }
 .custom-link:hover{
   color: var(--textColor);
+}
+
+h4{
+  margin-bottom: 1.5rem;
 }

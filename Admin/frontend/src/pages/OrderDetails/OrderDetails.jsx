@@ -14,6 +14,8 @@ function OrderDetails(props){
      const [billingData, setBillingData] = useState([]);
      const[orderData, setOrderData] = useState({});   //doesnt include timeline 
 
+     const [selectedStatus, setSelectedStatus] = useState("");
+     const [isStatusUpdated, setIsStatusUpdated] = useState(false);
 
 
 
@@ -30,6 +32,7 @@ function OrderDetails(props){
             } catch(err){
                 console.error('Error fetching statuses:', err); 
             }
+
         }
 
 
@@ -54,7 +57,7 @@ function OrderDetails(props){
                 //console.log(orderId);
                 const response = await fetch(`http://localhost:3000/order/${orderId}`); 
                 const orderData = await response.json();
-                console.log(orderData);   //{clientid, createdat, fname, lname, orderid, servicename, statusname}
+                console.log(orderData);   //{clientid, name, createdat, fname, lname, orderid, servicename, statusname}
 
                 setOrderData(orderData);
                 
@@ -71,6 +74,46 @@ function OrderDetails(props){
     }, [orderId]) //ensures that the effect is re-run whenever orderId changes.
 
 
+    //STATUS SELECT-OPTION -------------------------------------------------------
+    useEffect(() => {
+        if (orderData.statusname) {
+          setSelectedStatus(orderData.statusname);
+        }
+      }, [orderData.statusname]);
+    
+
+
+      async function handleStatusChange(event){
+            const newStatusName = event.target.value;
+            setSelectedStatus(newStatusName);
+            try {
+                await fetch(`http://localhost:3000/order/${orderData.orderid}/status`, {  // Send updated status to backend API
+                    method: 'PUT',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ status: newStatusName }),
+                });
+
+           
+            } catch (error) {
+                console.error('Error updating order status:', error);
+            }
+
+            setIsStatusUpdated(true);
+      };
+
+      useEffect(() => {
+        if (isStatusUpdated) {
+          const timeoutId = setTimeout(() => {
+            setIsStatusUpdated(false); // Reset the state after 3 seconds
+          }, 2500);
+      
+          // Cleanup function to clear the timeout when the component unmounts or when isStatusUpdated changes
+          return () => clearTimeout(timeoutId);
+        }
+      }, [isStatusUpdated]);
+    //STATUS SELECT-OPTION -------------------------------------------------------
 
 
     useEffect(() => {
@@ -92,6 +135,10 @@ function OrderDetails(props){
     }, [billingData]); // Calculate balance whenever billingData changes
     
   
+    
+
+
+
 
 
 
@@ -107,52 +154,77 @@ function OrderDetails(props){
                  {/* //BOXES (order details + billing): */}
                 <div className="order-left-panel">
                         {/* BOX 1 */}
+
+                        
+                    
                         <div className='order-details box'>
-                           <h5>Comfy Sloth</h5>
-                           <hr/>
+                                <h5>{orderData.name && orderData.name}</h5>
+                                <hr/>
+
+                                <div className='order-information'>
+                                       
+                                            <div className='order-information-row'>
+                                                <p className='title'>Order ID</p>
+                                                <p>#{orderId}</p>
+                                            </div>
+
+                                            <div className='order-information-row'>
+                                                <p className='title'>Client ID</p>
+                                                <p>#{orderData ? orderData.clientid : ""}</p>
+                                            </div>
+
+                                            <div className='order-information-row'>
+                                                <p className='title'>Client Name</p>
+                                                <Link to={`/profile/client/${encodeURIComponent(orderData.clientid)}`} className="custom-link">{orderData ? orderData.fname + " "+orderData.lname : ""}</Link>
+                                            </div>
+
+                                            <div className='order-information-row'>
+                                                <p className='title'>Service Type</p>
+                                                <p>{orderData ? orderData.servicename : ""}</p>
+                                            </div>
+
+                                            <div className='order-information-row'>
+                                                <p className='title'>Created At</p>
+                                                <p>{orderData.createdat ? orderData.createdat.substring(0,10) : ""}</p>
+                                            </div>
+
+                                        
 
 
-                           <div className='order-information'>
-                                    <div className='order-information-row'>
-                                        <p className='title'>Order ID</p>
-                                        <p>#{orderId}</p>
-                                    </div>
 
-                                    <div className='order-information-row'>
-                                        <p className='title'>Client ID</p>
-                                        <p>#{orderData.clientid}</p>
-                                    </div>
-
-                                    <div className='order-information-row'>
-                                        <p className='title'>Client Name</p>
-                                        <Link to={`/profile/client/${encodeURIComponent(orderData.clientid)}`} className="custom-link">{orderData.fname + " "+orderData.lname}</Link>
-                                    </div>
-
-                                    <div className='order-information-row'>
-                                        <p className='title'>Service Type</p>
-                                        <p>{orderData.servicename}</p>
-                                    </div>
+                                            <br></br>
+                                            <p className='title'>Status</p>
 
 
-                                    <br></br>
-                                    <p className='title'>Status</p>
+                                            <div className='order-buttons'>
+                                                {
+                                                    statuses && (
+                                                        <select name="selectedStatus" value={selectedStatus} onChange={handleStatusChange} className="order-details-status-option">
+                                                            <option name="selectedStatusId" value={selectedStatus} >{selectedStatus}</option>
+                                                            {
+                                                                statuses.map((status)=>{
+                                                                    if(status.name != selectedStatus)
+                                                                    return <option key={status.statusid} name="selectedStatusId" value={status.name}>{status.name}</option>
+                                                                })
+                                                            }
 
+                                                            
+                                                        
+                                                        </select>
+                                                    )
+                                                }
+                                                
+                                                {isStatusUpdated && 
+                                                    <i style={{fontSize:"0.69rem", color:"grey"}}>Status was updated.</i>
+                                                }
 
-                                    <div className='order-buttons'>
-                                        <select name='status' id='status'  className='order-details-status-option'>
-                                            <option value="">{orderData.statusname}</option>
-                                            {
-                                                statuses.map((status, index)=>{
-                                                    return  <option key={index} value={status.name}>{status.name}</option>
-                                                })
-                                            }
-                                        </select>
-                                        <br></br>
-
-                                        <Button  variant="dark" size="sm"  style={{padding:"10px", margin:"0"}}>Request More Information</Button>
-                                    </div>                              
-                           </div>
+                                                <br></br>
+                                                <Button  variant="dark" size="sm"  style={{padding:"10px", margin:"0"}}>Request More Information</Button>
+                                            </div>                              
+                                </div>
                         </div>
+
+                        
 
 
                         {/* BOX 2 */}
@@ -187,7 +259,7 @@ function OrderDetails(props){
                             {billingData ? (
                                 <div className='billing-table'>
                                     <div>
-                                    <b>Invoice</b>
+                                    <p className='title'>Invoice</p>
                                         {billingData.map((row, index)=>{
                                                         return (
                                                             <p key={index} className="billing-tb-cell">#{row.invoiceid}</p>
@@ -202,7 +274,7 @@ function OrderDetails(props){
 
 
                                     <div>
-                                    <b>Due Date</b>
+                                    <p className='title'>Due Date</p>
                                         { billingData.map((row, index)=>{
                                                         return (
                                                             <p key={index} className="billing-tb-cell">{row.duedate.substring(0,10)}</p>
@@ -214,10 +286,10 @@ function OrderDetails(props){
 
 
                                     <div>
-                                    <b>Receipt</b>
+                                    <p className='title'>Receipt</p>
                                         {billingData.map((row, index)=>{
                                                         return (
-                                                            <p key={index} className="billing-tb-cell">{row.receiptid ? '#' : ''}{row.receiptid}</p>
+                                                            <p key={index} className="billing-tb-cell">{row.receiptid ? '#' : ' -'}{row.receiptid}</p>
                                                             
                                                         )
                                                 })
@@ -227,7 +299,7 @@ function OrderDetails(props){
 
 
                                     <div>
-                                    <b>Amount</b>
+                                    <p className='title'>Amount</p>
                                         {billingData.map((row, index)=>{
                                                     if(row.receiptid != null)
                                                         return (

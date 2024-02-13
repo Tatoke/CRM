@@ -23,7 +23,7 @@
     margin-top: 1.5rem;
 }
 .billing-tb-cell{
-    margin:0.8rem 0;
+    margin:0.6rem 0;
 
 }
 
@@ -61,7 +61,8 @@
 
 
 .title{
-    font-weight: 600;
+    font-weight: 570;
+    color: black;
 }
 
 
@@ -78,6 +79,7 @@
 .order-information-row{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 0.2rem;
 }
 
 
