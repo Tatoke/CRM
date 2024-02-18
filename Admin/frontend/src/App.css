@@ -123,7 +123,7 @@ input, textarea, select{
   border: 1px solid #ccc;
   border-width: 1px;
   border-radius: 7px;
-  padding-left:  17px;
+  padding-left:  0.7rem;
   height: 1.8rem;
   margin-top: 5px;
   height:2rem;
@@ -170,3 +170,4 @@ IF WANT TEXT BEHAVE LIKE A LINK: */
 h4{
   margin-bottom: 1.5rem;
 }
+

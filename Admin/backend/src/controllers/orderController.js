@@ -55,12 +55,14 @@ async function getOrder(req, res){
 
 
 
+
+
+
 //2.Adding new order to db with it's milestones. (Dahboard -> AddNewOrderModal)
 async function addNewOrder(req, res){
     try {
         const { orderName, clientId, milestones, serviceType } = req.body; // Extract data about order (from frontend) passed from a form
-
-
+       
         
         // Insert data into the order table
         const newOrder = await db.one(
@@ -77,8 +79,8 @@ async function addNewOrder(req, res){
         //startedat = null for all milestones at the creating of an order. Neeed to add milestone to timeline to make the milestone active
         const milestoneInsertPromises = milestones.map((milestone, index) => {
           return db.none(
-            'INSERT INTO milestone (orderid, name, ordermilestonenumber, iscurrentmilestone) VALUES ($1, $2, $3, $4)',
-            [orderId, milestone, index+1, false]
+            'INSERT INTO milestone (orderid, name, ordermilestonenumber) VALUES ($1, $2, $3)',
+            [orderId, milestone, index+1]
           );
         });
     

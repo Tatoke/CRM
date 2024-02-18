@@ -5,8 +5,20 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom'; //for redirecting to client profile page
 
 
+import OrderTimeline from './OrderTimeline.jsx';
+
+
+
+
+
+
 
 function OrderDetails(props){
+    let loggedInEmpId = 1;   //FIGURE OUT THIS LATER!!! NEED TO KEEP TRACK OF WHO IS LOGGED IN RIGHT NOW TO KEEP TRACK OF UPDATES FOR TIMELINE (passed to OrderTimeline component)
+
+
+
+
      const { orderId } = useParams(); //ORDER ID 
      const [balance, setBalance] = useState(0);
 
@@ -323,10 +335,12 @@ function OrderDetails(props){
 
 
 
+
+{/* ============================================================================TIMELINE------------------------------------------------------------------------------------------ */}
                 {/* //BOX 3: (timeline) */}
                 <div className="order-timeline box">
-                        <h5>Timeline</h5>
-                        <hr />
+                        {/* custom timeline component: */}
+                        <OrderTimeline orderId={orderId} loggedInEmpId={loggedInEmpId}/>
 
                 </div>
 

@@ -10,8 +10,8 @@ import orderController from './src/controllers/orderController.js';
 import statusController from './src/controllers/statusController.js';
 import serviceController from './src/controllers/serviceController.js';
 import billingController from './src/controllers/billingController.js';
-
-
+import milestoneController from './src/controllers/milestoneController.js'
+import updateController from './src/controllers/updateController.js';
 
 
 //TEST:
@@ -50,11 +50,20 @@ router.post('/orders', orderController.addNewOrder);  //add new order to databas
 router.get('/billing/:orderId', billingController.getOrderBilling); //billing info about particular order
 router.get('timeline/:orderId', orderController.getOrderTimeline); //gets milestones + updates + employees who  made updates with dates for an orderId
 router.get('/order/:orderId', orderController.getOrderDetails); //gets order details (id, client, status, service type, userEmail for request info modal)
-router.put('/order/:orderId/status', orderController.updateOrderStatus);  
+router.put('/order/:orderId/status', orderController.updateOrderStatus);  //fetch all milestones for a particular orderId (timeline select-option)
 
 
 
 
+//----------------Milestone endpoints--------------------
+router.get('/orders/:orderId/milestones', milestoneController.getMilestonesForOrder);  
+router.patch('/milestones/:milestoneId', milestoneController.activateMilestoneStatus);   //timeline - when add milestone button pushed -> activate milestone in database to display later on timeline
+
+
+
+//----------------Update endpoints--------------------
+router.post('/updates', updateController.addUpdate);
+router.get('/updates', updateController.getUpdates); 
 
 
 

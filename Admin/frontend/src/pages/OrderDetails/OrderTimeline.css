@@ -1,0 +1,144 @@
+.order-update-form {
+    display:flex;
+    flex-direction: column;
+    margin-top: 4rem;
+    width: 70%;
+}
+
+.form-bottom{
+    display: flex;
+    flex-direction: column;
+    margin-top:1.1rem;
+}
+
+
+
+.form-bottom * {
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+
+.form-bottom button{
+    width:15%;
+    margin-right: 0;
+    padding:0.3rem;
+    align-self: flex-end;
+    height: 2rem;
+
+}
+
+.form-top select{
+    width: 25%;
+}
+
+.order-update-form textarea{
+    height: 5rem;
+    padding: 0.7rem;
+}
+
+
+
+
+/* UPPER SECTION */
+
+.timeline-with-icons {
+    border-left: 1px solid hsl(0, 0%, 90%);
+    position: relative;
+    list-style: none;
+}
+  
+.timeline-item {
+    position: relative;
+    left: 2rem;
+    color: black;
+    
+    margin-bottom: 2rem;
+    border-radius:3px;
+    box-shadow: var(--shadow-1);
+    padding: 1.8rem;
+    padding-bottom: 3rem;
+
+    margin-right:3rem;
+
+
+    
+}
+  
+  .timeline-with-icons .timeline-item:after {
+    position: absolute;
+    display: block;
+    top: 0;
+}
+  
+  .timeline-with-icons .timeline-icon {
+    position: absolute;
+    left: -48px;
+    background-color: hsl(217, 88.2%, 90%);
+    color: hsl(217, 88.8%, 35.1%);
+    border-radius: 50%;
+    height: 31px;
+    width: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .label{
+    position: absolute;
+    top:0;
+    right:0;
+
+    background-color: rgba(75, 195, 75, 0.903);
+    padding: 0.4rem;
+    border:none;
+    border-radius: 0px 3px 0px 3px;
+    color: white;
+    text-transform: capitalize;
+    font-size: smaller;
+    /* margin: 1rem; */
+
+    
+  }
+  
+  .update-date{
+    position: absolute;
+    right:0;
+    bottom:0;
+   
+    margin: 1rem;
+    font-size: smaller;
+  }
+
+
+
+
+
+  /* timeline SCROLL styles */
+  .scrollbar {
+    overflow: scroll;
+  }
+  
+  .scrollbar::-webkit-scrollbar {
+    width: 7px;
+    height: 6px;
+  }
+  
+  .scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+       /* custom colors  */
+  .scrollbar-primary::-webkit-scrollbar {
+    background-color: #F5F5F5;
+  }
+  .scrollbar-primary {
+    scrollbar-color: #651fff #f5f5f5;
+  }
+  .scrollbar-primary::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #4285F4;
+  }
