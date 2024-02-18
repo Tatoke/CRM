@@ -14,8 +14,10 @@ import { MDBContainer, MDBIcon } from "mdb-react-ui-kit";
 
 //orderId passed from OrderDetails page
 function OrderTimeline({orderId, loggedInEmpId}){   
-    let [timelineData, setTimelineData] = useState([]);
+    let [isLoading, setIsLoading] = useState(true);
 
+
+    let [timelineData, setTimelineData] = useState([]);
     let [optionSelected, setOptionSelected] = useState();   //track what option was selected in a form (to add an update or a milestone)
     let [milestones, setMilestones] = useState([]); //milestones for this particular order
     let [milestoneToAddToTimeline, setMilestoneToAddToTimeline] = useState();   //is a milestone id
@@ -28,28 +30,39 @@ function OrderTimeline({orderId, loggedInEmpId}){
 
 
 
-   
-    //console.log(timelineData);
-    console.log("orderid " + orderId);
+    //0. Fetch all mielestones AND updates when page opens:
+    useEffect(()=>{   //fetch updates for that orderId right in the beginning
+        fetchTimelineData(); 
+    }, [])
 
 
-    //0. Fetch all mielestones/updates when page opens:
-    useEffect(()=>{
+    function fetchTimelineData(){
         fetch(`http://localhost:3000/updates?orderId=${orderId}`)
-        .then(response => response.json())
-        .then((timelineData) =>{
-             setTimelineData(timelineData);
-             console.log(timelineData);
-        })
-        .catch(error => console.error('Error fetching updates:', error));
-    }, [orderId]);
 
+        .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to fetch milestones');
+            }
+            return response.json(); // This returns a promise that resolves to the JSON data in the response body
+          })
+
+        .then((timelineData) =>{ //data will be a JavaScript
+            setTimelineData(timelineData);
+            setIsLoading(false);
+            //console.log("Timeline data: " + timelineData);
+           
+        })
+
+        .catch(error => console.error('Error fetching updates:', error));
+    }
+
+ 
 
 
 
     //1. fetch all milestones for an order id (for select-option):
     async function fetchMilestones() {
-        return fetch(`http://localhost:3000/orders/${orderId}/milestones`)
+        fetch(`http://localhost:3000/orders/${orderId}/milestones`)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Failed to fetch milestones');
@@ -68,9 +81,12 @@ function OrderTimeline({orderId, loggedInEmpId}){
   
 
     useEffect(()=>{
-          fetchMilestones()
+          fetchMilestones();
+          fetchTimelineData();
     }, [orderId]);
 
+
+   
 
 
   
@@ -82,13 +98,10 @@ function OrderTimeline({orderId, loggedInEmpId}){
 
 
 
-    //4. WHEN 'ADD' BUTTON CLICKED: Adding a milestone/update selected to timeline (need to make it active in db table)
+    //2. WHEN 'ADD' BUTTON CLICKED: Adding a milestone/update selected to timeline (need to make it active in db table)
+    const [message, setMessage] = useState("");
+
     function handleClick(){  //one function for handling adding of milestone or adding of an update
-
-        console.log("Add button clicked. milestone chosen: " + milestoneToAddToTimeline );
-        console.log("Option selected:" + optionSelected); 
-
-
 
         if (optionSelected == 'Milestone') {
             // Make the milestone active in the database = set activesince column 
@@ -101,18 +114,34 @@ function OrderTimeline({orderId, loggedInEmpId}){
               },
               body: JSON.stringify({ milestoneToMakeActive: milestoneToAddToTimeline }),
             })
-              .then(() => {
+            
+             .then(() => {
                 // Fetch the updated milestones after 
                 fetchMilestones();
+                fetchTimelineData();
+
               })
               .catch(error => {
                 console.error('Error updating milestone status:', error);
+                setMessage("Failed to add milestone to timeline.");
+                    setTimeout(() => {
+                    setMessage("");
+                }, 2000);
               });
+
+
+
+              setMessage("Milestone was added to timeline.");
+                    setTimeout(() => {
+                    setMessage("");
+              }, 2000);
           } 
           
           
           
           
+
+
           else {
                 // Add the update to the timeline
                 fetch('http://localhost:3000/updates', {
@@ -122,14 +151,24 @@ function OrderTimeline({orderId, loggedInEmpId}){
                 })
                 .then(() => {
                     // Reset the update fields
-                    
-                    
+                    fetchTimelineData();
                 })
                 .catch(error => {
                     console.error('Error adding an update to timeline:', error);
+                    setMessage("Failed to add update to timeline.");
+                        setTimeout(() => {
+                        setMessage("");
+                    }, 2000);
                 });
 
+
+
                 setUpdateToAddToTimeline({ title: '', description: '' });
+
+                setMessage("Update was added to timeline.");
+                    setTimeout(() => {
+                    setMessage("");
+                }, 2000);
             }
     }
 
@@ -147,7 +186,11 @@ function OrderTimeline({orderId, loggedInEmpId}){
         if (timelineData.length === 0) {
           setOptionSelected('Milestone');
         }
-      }, [timelineData]);
+    }, [timelineData]);
+
+
+
+
 
 
 
@@ -157,38 +200,40 @@ function OrderTimeline({orderId, loggedInEmpId}){
             <h5>Timeline</h5>
             <hr />
 
-            {/* 1 PART: timeline */}  
-                {
+            {/* 1 PART: timeline */}
+            {
+                isLoading ? <p className="loading"  style={{marginTop:"5rem"}}></p> :
+                (
                     timelineData.length!=0 ? (
                         <MDBContainer className=" scrollbar scrollbar-primary" style={{width:"110%", margin:"2.5rem", maxHeight: "600px"}}>
-                        <ul className="timeline-with-icons">
-                            {
-                                
-                                timelineData.map((updateData, index) =>{
-                                    return <TimelineCard key={index} {...updateData}/>
-                                })
-                            }
-
-                        </ul>
-                    </MDBContainer>
+                            <ul className="timeline-with-icons">
+                                {
+                                    
+                                    timelineData.map((updateData, index) =>{
+                                        return <TimelineCard key={index} {...updateData}/>
+                                    })
+                                }
+                            </ul>
+                        </MDBContainer>
 
                     ) : null
-                }
-                    
-
-                    
-                            
-
+                )
+            }
+                
 
 {/* ============================================================================================== */}
             {/* 2 PART: update FORM */}
             <form className="order-update-form">
-                 {timelineData.length==0 ? (
+                {isLoading ? null :(
+                    timelineData.length==0 ? (
                     <div style={{display:"flex", alignItems:"center", margin: "0 0 2rem 0"}}><FcIdea size={25}/><h6> &nbsp;&nbsp;Add your first milestone to the timeline to start logging updates.</h6></div> 
                     
                     
 
-                    ) : null}
+                    ) : null
+
+                )}
+
 
 
                 <div className="form-top">
@@ -245,7 +290,8 @@ function OrderTimeline({orderId, loggedInEmpId}){
 
                        
                     }
-
+                    
+                    <i>{message}</i>
                     <Button  variant="dark" size="sm" onClick={handleClick}>Add</Button>
 
                     

@@ -22,6 +22,7 @@ async function addUpdate(req, res){
     db.one('INSERT INTO "update" (milestoneid, empid, title, details, activesince) VALUES($1, $2, $3, $4, CURRENT_TIMESTAMP) RETURNING updateid', [milestoneIdLastActive.milestoneid, loggedInEmpId,  updateToAddToTimeline.title, updateToAddToTimeline.description])
     .then(result => {
         //console.log('New update added:', result);
+        res.status(200).json({ message: 'Update added successfully' });
     })
     .catch(error => {
         console.error('Error adding new update:', error);
@@ -36,7 +37,7 @@ async function addUpdate(req, res){
 //2.Get all the milestones and updates for timeline for a particular order
 async function getUpdates(req, res){
     let orderId =req.query.orderId;
-    console.log("order id in backend: "+ orderId)
+
 
     //get milestones with activesince and all the updates 
     const query = `
@@ -55,19 +56,14 @@ async function getUpdates(req, res){
 
 
     db.manyOrNone(query, [orderId])
-                    
-
-    .then(timelineData => {
-        res.json(timelineData);
-        //console.log(`Updates for orderId : ${orderId} `, updatesData);
-    })
-    .catch(error => {
-        console.error('Error selecting updates:', error);
-    });
-
-
-    console.log(orderId);
-
+        .then(timelineData => {
+            res.json(timelineData);
+            console.log(`Updates in backend for orderId : ${orderId} `, timelineData);
+        })
+        .catch(error => {
+            res.status(500).json({ error: 'Internal Server Error' })
+            console.error('Error selecting updates:', error);
+        });
 
 }
 

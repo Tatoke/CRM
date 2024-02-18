@@ -28,16 +28,16 @@ async function getMilestonesForOrder(req, res) {
 //2. set 'activesince' for an added to timeline Milestone  (timeline add milestone functionality) and return 
 async function activateMilestoneStatus(req, res){
     let milestoneId = req.body.milestoneToMakeActive;
-    console.log("milestone id to make active::" +milestoneId); //undefined 
+    //console.log("milestone id to make active::" +milestoneId); //undefined 
    
-    try {
-        await db.none('UPDATE milestone SET activesince=CURRENT_TIMESTAMP WHERE milestoneid = $1', [milestoneId]);
-        //console.log('Milestone isactiveontimeline status updated successfully');
-
-    } catch (error) {
-        console.error('Error updating milestone status:', error);
-        throw error;
-    }
+     db.none('UPDATE milestone SET activesince=CURRENT_TIMESTAMP WHERE milestoneid = $1', [milestoneId])
+     .then(result => {
+        res.status(200).json({ message: 'Milestone added successfully' });
+     })
+    .catch(error => {
+        console.error('Error adding milestone:', error);
+    });
+    
 }
 
 
