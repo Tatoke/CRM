@@ -3,7 +3,7 @@ import { React, useState, useEffect} from 'react';
 
 import Button from 'react-bootstrap/Button';
 import './Finances.css';
-import AddTransactionDialog from '../../components/AddTransactionDialog/AddTransaction.jsx'
+import AddTransactionModal from '../../components/AddTransaction_modal/AddTransactionModal.jsx'
 
 
 import Table from '@mui/material/Table';
@@ -80,7 +80,7 @@ function Finances(props) {
             <Button onClick={openModal} variant="dark" size="sm" style={{ position: 'absolute', top: '115px', right: '70px' }}>Add Transaction</Button>
 
             {/* 1. FORM */}
-            <form onSubmit={handleSubmit}>
+            <form className="finances-form" onSubmit={handleSubmit}>
                 <div className='left'>
                     <input type='date' name='fromDate' id='fromDate' value={formData.fromDate} onChange={handleChange} ></input>
                     <input type='date' name='toDate' id='toDate' value={formData.toDate} onChange={handleChange} ></input>
@@ -100,7 +100,7 @@ function Finances(props) {
             </form>
 
             {/* 2. MODAL: shows conditionally */}
-            {showAddTransactionDialog && <AddTransactionDialog closeModal={closeModal}/>}
+            {showAddTransactionDialog && <AddTransactionModal closeModal={closeModal}/>}
             
 
             <TableContainer component={Paper} className='finances-table'>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AddTransaction.css';
+import './AddTransactionModal.css';
 import Button from 'react-bootstrap/Button';
 import { IoCloseOutline } from 'react-icons/io5';
 

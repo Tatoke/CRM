@@ -8,7 +8,7 @@ async function getServices(req, res){
     try {
         const services = await db.any('SELECT * FROM service');
         res.json(services); //returns json format to frontend
-        //console.log(services); 
+        //console.log("Services in backend:" +services); 
     }
     catch(error){
         console.error('Error fetching status services:', error);

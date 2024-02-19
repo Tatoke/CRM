@@ -59,6 +59,7 @@ function Home(props){
                 //console.log(data);
 
                 setStatuses(data);
+                //console.log(data);
             } catch(err){
                 console.error('Error fetching statuses:', err); 
             }
@@ -67,7 +68,7 @@ function Home(props){
 
         async function fetchServicesData(){
             try{
-                const response = await fetch(`http://localhost:3000/services`); //returns all statuses 
+                const response = await fetch(`http://localhost:3000/services`); 
                 const data = await response.json();
                 //console.log(data);
 
