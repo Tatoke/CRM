@@ -4,6 +4,7 @@ import { RxAvatar } from "react-icons/rx";
 import { PiNotePencilBold } from "react-icons/pi";
 import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom'; 
+import { useEffect } from "react";
 
 
 
@@ -31,26 +32,53 @@ const ProfileTextArea = ({ label, value, onChange, editable }) => (
 );
 
 
-
-
-
-
 function Profile(props) {
+
+  const [personalInfo, setPersonalInfo] = useState({
+    fullName: "",
+    primaryemail: "",
+    primarycellphone: "",
+    city: "",
+    region: ""
+  });
+
+  const [companyInfo, setCompanyInfo] = useState({
+    companyname: "",
+    companyemail: "",
+    companycellphone: "",
+    companylocation: "",
+    websiteurl: "",
+    companydescription: ""
+  });
+
   //INGA'S NOTE FOR JUSTIN:--------------------------
-  const { userType, userId } = useParams(); //userType can be either a 'client' or 'employee'. According to this info -> extract data from specified table according to the userId
+  const { userId } = useParams(); //userType can be either a 'client' or 'employee'. According to this info -> extract data from specified table according to the userId
   //use useEffect() React hook in this component to make a request to backend.
   //will have to use if-else to parse appropriate endpoint (either one to parse client table or to parse employee table)
   //use conditional rendering: if user if Employee => dont show company and list of orders.
   //-------------------------------------------------
+  useEffect(()=>{
+    async function fetchProfileData(){
+      try {
+        const response = await fetch(`http://localhost:3000/employees/${userId}`);
+        const data = await response.json();
+        console.log(data)
+        setPersonalInfo({
+          ...personalInfo,
+          fullName: data[0].fname + " " + (data[0].mname ? " " + data[0].mname : "") + " " + data[0].lname, // Update fullName with the fetched data
+          primaryemail: data[0].email,
+          primarycellphone: data[0].phone,
+          city: data[0].city,
+          region: data[0].province
+        });
 
-
-  const [personalInfo, setPersonalInfo] = useState({
-    fullName: "John Swarowski",
-    primaryemail: "Johnswarowski@gmail.com",
-    primarycellphone: "",
-    location: "",
-    countryregion: ""
-  });
+        setCompanyInfo
+      } catch (err){
+        console.error(`Error fetching statuses:`, err)
+      }
+    }
+    fetchProfileData();
+  }, [userId])
 
   const [editablePersonal, setEditablePersonal] = useState(false);
 
@@ -64,15 +92,6 @@ function Profile(props) {
       [field]: event.target.value
     });
   };
-
-  const [companyInfo, setCompanyInfo] = useState({
-    companyname: "",
-    companyemail: "",
-    companycellphone: "",
-    companylocation: "",
-    websiteurl: "",
-    companydescription: ""
-  });
 
   const [editableCompany, setEditableCompany] = useState(false);
 
@@ -105,12 +124,14 @@ function Profile(props) {
       <div className="profile">
       <h5>Profile</h5>
         <div className="profile-info-header">
-            <div className="profile-picture">
-              <RxAvatar />
-            </div>
-            <div className="profile-info-header-content">
-              <h6>{personalInfo.fullName}</h6>
-              <h6>{personalInfo.primaryemail}</h6>
+            <div className="profile-info-header-container">
+              <div className="profile-picture">
+                <RxAvatar />
+              </div>
+              <div className="profile-info-header-content">
+                <h6>{personalInfo.fullName}</h6>
+                <h6>{personalInfo.primaryemail}</h6>
+              </div>
             </div>
             <Button className="deletebutton" onClick={deleteModal} variant="dark" size="sm">
             <h7>Delete Client</h7>
@@ -139,15 +160,15 @@ function Profile(props) {
             editable={editablePersonal}
           />
           <ProfileField
-            label="Location"
-            value={personalInfo.location}
-            onChange={(e) => handlePersonalInputChange(e, "location")}
+            label="City"
+            value={personalInfo.city}
+            onChange={(e) => handlePersonalInputChange(e, "city")}
             editable={editablePersonal}
           />
           <ProfileField
-            label="Country/Region"
-            value={personalInfo.countryregion}
-            onChange={(e) => handlePersonalInputChange(e, "countryregion")}
+            label="Region"
+            value={personalInfo.region}
+            onChange={(e) => handlePersonalInputChange(e, "region")}
             editable={editablePersonal}
           />
         </div>
