@@ -14,6 +14,7 @@
     box-shadow: var(--shadow-2);
     margin-bottom: 2.5rem;
     align-items: center;
+    justify-content: space-between;
 }
 
 .profile-info-header-content {
@@ -98,6 +99,7 @@ h2 {
     margin-right: 0.25rem;
 }
 
-.deletebutton {
-    margin-left: 75%;
+.profile-info-header-container {
+    display: flex;
+    flex-direction: row;
 }

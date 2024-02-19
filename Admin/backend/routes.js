@@ -35,7 +35,7 @@ router.get("/clients/:clientId", clientController.getClientCompanyOrderListInfo)
 //----------------EMPLOYEE endpoints (need this?)--------------------
 //router.post('/employee/login', employeeController.loginEmployee); 
 //router.post('/employee/logout', employeeController.logoutEmployee); 
-router.get('employees/:employeeId', employeeController.getEmployeeOrderInfo); //gets all info about particular employee and orders that he works on (for Profile page)
+router.get('/employees/:employeeId', employeeController.getEmployeeOrderInfo); //gets all info about particular employee and orders that he works on (for Profile page)
 
 
 

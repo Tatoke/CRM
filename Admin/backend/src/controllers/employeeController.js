@@ -24,7 +24,15 @@ async function logoutEmployee(req, res){
 //gets all info about particular employee and orders that he works on (for Profile page)
 async function getEmployeeOrderInfo(req, res){
     const employeeId = req.params.employeeId; //passed from 'employees/:employeeId'
-
+    try {
+        const employee = await db.any('SELECT * FROM employee WHERE employeeId = $1', [employeeId]);
+        res.json(employee); //returns json format to frontend
+        console.log(employee); 
+    }
+    catch(error){
+        console.error('Error fetching status names:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
 
