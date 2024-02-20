@@ -158,7 +158,26 @@ async function updateOrderStatus(req, res){
 }
 
 
+//7. Delete order by orderId:
+async function deleteOrderById(req, res){
+    let orderId = req.params.orderId;
+    //console.log("order id to be deleted:" + orderId);
+
+
+    db.none('DELETE FROM "order" WHERE orderid = $1', [orderId])    //deleted on cascade -> milestones and updates automatically deleted
+    .then(() => {
+        console.log('Order #'  + orderId + "deleted successfully");
+        res.json({ success: true, message: 'Order deleted successfully' });
+    })
+    .catch(error => {
+        console.error('Error deleting order #' + orderId, error);
+        res.status(500).json({ success: false, message: 'Failed to delete order' });
+    });
 
 
 
-export default {getOrder, addNewOrder, getOrderDetails, getOrderTimeline, updateOrderStatus};
+}
+
+
+
+export default {getOrder, addNewOrder, getOrderDetails, getOrderTimeline, updateOrderStatus, deleteOrderById};

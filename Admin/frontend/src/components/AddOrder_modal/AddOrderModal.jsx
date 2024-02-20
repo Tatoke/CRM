@@ -126,7 +126,7 @@ function AddOrderModal({closeModal}){
 
     return(
         <div>
-            <form onSubmit={handleSubmit} className='add-client-modal'>
+            <form onSubmit={handleSubmit} className='universal-modal'>
             
                 {/* CLOSE BUTTON */}
                 <IoCloseOutline size="2em" onClick={()=>closeModal()}  className='close-btn'/>

@@ -43,7 +43,7 @@ app.use('/order/:orderId/status', router); //updates order status
 app.use('/orders/:orderId/milestones', router);  
 app.use('/milestones/:milestoneId', router); 
 app.use('/updates', router); //add new update to Update table (or select all updates)
-
+app.use('/orders/:orderId', router); //delete otder by id
 
 
 

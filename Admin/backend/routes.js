@@ -51,7 +51,7 @@ router.get('/billing/:orderId', billingController.getOrderBilling); //billing in
 router.get('timeline/:orderId', orderController.getOrderTimeline); //gets milestones + updates + employees who  made updates with dates for an orderId
 router.get('/order/:orderId', orderController.getOrderDetails); //gets order details (id, client, status, service type, userEmail for request info modal)
 router.put('/order/:orderId/status', orderController.updateOrderStatus);  //fetch all milestones for a particular orderId (timeline select-option)
-
+router.delete('/orders/:orderId', orderController.deleteOrderById); 
 
 
 

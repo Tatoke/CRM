@@ -356,7 +356,7 @@ function OrderDetails(props){
 
 
         
-            {isDeleteOrderModalOpened ? <DeleteOrderModal orderId={orderId}/> :null}
+            {isDeleteOrderModalOpened ? <DeleteOrderModal orderId={orderId} setIsDeleteOrderModalOpened={setIsDeleteOrderModalOpened}/> :null}
         </div>
 
 
