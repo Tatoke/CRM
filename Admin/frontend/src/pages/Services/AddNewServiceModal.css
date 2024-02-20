@@ -1,0 +1,17 @@
+.new-service-modal{
+
+}
+
+
+
+
+.close-btn{
+    position: absolute;
+    right: 1.3em;
+    top:1.3em;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+
+

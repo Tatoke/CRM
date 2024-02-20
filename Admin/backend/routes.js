@@ -14,6 +14,7 @@ import milestoneController from './src/controllers/milestoneController.js'
 import updateController from './src/controllers/updateController.js';
 
 
+
 //TEST:
 router.get('/', (req, res) => {       //type http://localhost:3000/ in address line in a browser to check the response
     res.send('Home page (backend)');
@@ -69,16 +70,13 @@ router.get('/updates', updateController.getUpdates);
 
 
 
-
-
-
 //----------------STATUS endpoints--------------------
 router.get('/statuses', statusController.getStatuses); //lists all statuses (Dashboard select-option )
 
 
 //----------------SERVICE endpoints--------------------
 router.get('/services', serviceController.getServices); //lists all statuses (Dashboard select-option )
-
+router.post('/services', serviceController.addNewService); 
 
 
 

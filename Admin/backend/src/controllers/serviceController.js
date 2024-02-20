@@ -18,4 +18,29 @@ async function getServices(req, res){
 }
 
 
-export default {getServices};
+
+//2. Add new service
+async function addNewService(req, res){
+    const { name, description, image } = req.body;
+    const imageData = Buffer.from(image, 'base64');
+    console.log("My new service: " + imageData);
+
+
+ const newService = db.none('INSERT INTO service(name, description, image) VALUES($1, $2, $3)', [name, description, imageData])
+  .then(() => {
+    res.status(200).json(newService);
+    console.log('Service inserted successfully');
+  })
+  .catch((error) => {
+    res.status(500).send('Error inserting new service');
+    console.error('Error inserting service:', error);
+  });
+
+
+
+}
+
+
+
+
+export default {getServices, addNewService};
