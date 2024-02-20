@@ -1,3 +1,15 @@
+.title-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.title-section button{
+    margin:0;
+}
+
+
+
 .order{
     display: flex;
 }

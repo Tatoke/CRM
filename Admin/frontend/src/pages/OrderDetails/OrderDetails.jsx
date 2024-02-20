@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'; //for redirecting to client profile pag
 
 
 import OrderTimeline from './OrderTimeline.jsx';
-
+import DeleteOrderModal from '../../components/DeleteOrder_modal/DeleteOrderModal.jsx';
 
 
 
@@ -28,6 +28,8 @@ function OrderDetails(props){
 
      const [selectedStatus, setSelectedStatus] = useState("");
      const [isStatusUpdated, setIsStatusUpdated] = useState(false);
+
+     let [isDeleteOrderModalOpened, setIsDeleteOrderModalOpened] = useState(false);
 
 
 
@@ -157,7 +159,11 @@ function OrderDetails(props){
 
     return(
         <div className="page-layout">
-            <h4>Dashboard / Order Details</h4>
+            <div className='title-section'>
+                <h4>Dashboard / Order Details</h4>
+                <Button  variant="outline-danger" size="sm" onClick={()=>{setIsDeleteOrderModalOpened(true)}}>Delete Order</Button>
+            </div>
+            
 
           
           
@@ -346,13 +352,16 @@ function OrderDetails(props){
 
             </div>
            
+        
 
 
-            
-
-
-
+        
+            {isDeleteOrderModalOpened ? <DeleteOrderModal orderId={orderId}/> :null}
         </div>
+
+
+
+      
     )
 }
 
