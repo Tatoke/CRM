@@ -18,20 +18,20 @@ import db from '../configs/database.js';
 
 
 // //2
-// async function getClientById(req,res){
-//     try {
-//         let clientId = req.params.clientId;
+async function getClientById(req,res){
+    try {
+        let clientId = req.params.clientId;
 
-//         const client = await db.oneOrNone('SELECT * FROM client WHERE clientid = $1', clientId);
-//         res.json(client); //returns json format
-//         console.log(client); 
-//     }
-//     catch(error){
-//         console.error('Error fetching client:', error);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
+        const client = await db.oneOrNone('SELECT * FROM client WHERE clientid = $1', clientId);
+        res.json(client); //returns json format
+        console.log(client); 
+    }
+    catch(error){
+        console.error('Error fetching client:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 
-// }
+}
 
 
 
@@ -92,10 +92,10 @@ async function addNewClient(req, res){
 //5. gets client, company, order list info for client profile page. Enpoint from frontend: "/clients/:clientId"
 async function getClientCompanyOrderListInfo(req, res){
     const clientId = req.params.clientId;
-
+    
 }
 
 
 
 
-export default {getClient, addNewClient,getClientCompanyOrderListInfo};
+export default {getClient, getClientById, addNewClient,getClientCompanyOrderListInfo};

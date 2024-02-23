@@ -6,6 +6,13 @@ import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom'; 
 import { useEffect } from "react";
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 
 const ProfileField = ({ label, value, onChange, editable }) => (
@@ -22,8 +29,8 @@ const ProfileTextArea = ({ label, value, onChange, editable }) => (
       <textarea
         onChange={onChange}
         value={value}
-        rows={10}
-        cols={241}
+        style={{ width: "87vw", maxHeight: "4.5rem", resize: "none", overflow: "hidden" }}
+        rows={Math.max(value.split('\n').length, 1)} // Adjust height based on content
       ></textarea>
     ) : (
       <span>{value}</span>
@@ -51,8 +58,9 @@ function Profile(props) {
     companydescription: ""
   });
 
+  const [responseData, setResponseData] = React.useState(null); //data that is returned back from database
   //INGA'S NOTE FOR JUSTIN:--------------------------
-  const { userId } = useParams(); //userType can be either a 'client' or 'employee'. According to this info -> extract data from specified table according to the userId
+  const { userType, userId } = useParams(); //userType can be either a 'client' or 'employee'. According to this info -> extract data from specified table according to the userId
   //use useEffect() React hook in this component to make a request to backend.
   //will have to use if-else to parse appropriate endpoint (either one to parse client table or to parse employee table)
   //use conditional rendering: if user if Employee => dont show company and list of orders.
@@ -60,19 +68,28 @@ function Profile(props) {
   useEffect(()=>{
     async function fetchProfileData(){
       try {
-        const response = await fetch(`http://localhost:3000/employees/${userId}`);
+        const response = await fetch(`http://localhost:3000/${userType}/${userId}`);
         const data = await response.json();
-        console.log(data)
-        setPersonalInfo({
-          ...personalInfo,
-          fullName: data[0].fname + " " + (data[0].mname ? " " + data[0].mname : "") + " " + data[0].lname, // Update fullName with the fetched data
-          primaryemail: data[0].email,
-          primarycellphone: data[0].phone,
-          city: data[0].city,
-          region: data[0].province
-        });
-
-        setCompanyInfo
+        if (userType === "employees") {
+          setPersonalInfo({
+            ...personalInfo,
+            fullName: data[0].fname + " " + (data[0].mname ? " " + data[0].mname : "") + " " + data[0].lname, // Update fullName with the fetched data
+            primaryemail: data[0].email,
+            primarycellphone: data[0].phone,
+            city: data[0].city,
+            region: data[0].province
+          });
+        } else {
+          setPersonalInfo({
+            ...personalInfo,
+            fullName: data.fname + " " + (data.mname ? " " + data.mname : "") + " " + data.lname, // Update fullName with the fetched data
+            primaryemail: data.email,
+            primarycellphone: data.phone,
+            city: data.city,
+            region: data.province
+          });
+          const response = await fetch(`http://localhost:3000/${userType}/${userId}`);
+        }
       } catch (err){
         console.error(`Error fetching statuses:`, err)
       }
@@ -122,55 +139,63 @@ function Profile(props) {
 
     <div className="container">
       <div className="profile">
-      <h5>Profile</h5>
+      { userType === "clients" ? (
+        <h4>Client / Profile Details</h4>
+      ) : (
+        <h4>Employee / Profile Details</h4>
+      )}
         <div className="profile-info-header">
             <div className="profile-info-header-container">
               <div className="profile-picture">
                 <RxAvatar />
               </div>
               <div className="profile-info-header-content">
-                <h6>{personalInfo.fullName}</h6>
-                <h6>{personalInfo.primaryemail}</h6>
+                <h5>{personalInfo.fullName}</h5>
+                <h5>{personalInfo.primaryemail}</h5>
               </div>
             </div>
-            <Button className="deletebutton" onClick={deleteModal} variant="dark" size="sm">
-            <h7>Delete Client</h7>
+            <Button className="deletebutton" onClick={deleteModal} variant="outline-dark" size="sm">
+            <h6>Delete Client</h6>
             </Button>
         </div>
       </div>
 
       <div className="profile-info-content">
         <div className="profile-info-content-field">
-          <ProfileField
-            label="Full Name"
-            value={personalInfo.fullName}
-            onChange={(e) => handlePersonalInputChange(e, "fullName")}
-            editable={editablePersonal}
-          />
-          <ProfileField
-            label="Primary Email"
-            value={personalInfo.primaryemail}
-            onChange={(e) => handlePersonalInputChange(e, "primaryemail")}
-            editable={editablePersonal}
-          />
-          <ProfileField
-            label="Primary Cellphone"
-            value={personalInfo.primarycellphone}
-            onChange={(e) => handlePersonalInputChange(e, "primarycellphone")}
-            editable={editablePersonal}
-          />
-          <ProfileField
-            label="City"
-            value={personalInfo.city}
-            onChange={(e) => handlePersonalInputChange(e, "city")}
-            editable={editablePersonal}
-          />
-          <ProfileField
-            label="Region"
-            value={personalInfo.region}
-            onChange={(e) => handlePersonalInputChange(e, "region")}
-            editable={editablePersonal}
-          />
+          <div className="profile-info-content-field-row">
+            <ProfileField
+              label="Full Name"
+              value={personalInfo.fullName}
+              onChange={(e) => handlePersonalInputChange(e, "fullName")}
+              editable={editablePersonal}
+            />
+            <ProfileField
+              label="Primary Email"
+              value={personalInfo.primaryemail}
+              onChange={(e) => handlePersonalInputChange(e, "primaryemail")}
+              editable={editablePersonal}
+            />
+            <ProfileField
+              label="Primary Cellphone"
+              value={personalInfo.primarycellphone}
+              onChange={(e) => handlePersonalInputChange(e, "primarycellphone")}
+              editable={editablePersonal}
+            />
+          </div>
+          <div className="profile-info-content-field-row">
+            <ProfileField
+              label="City"
+              value={personalInfo.city}
+              onChange={(e) => handlePersonalInputChange(e, "city")}
+              editable={editablePersonal}
+            />
+            <ProfileField
+              label="Region"
+              value={personalInfo.region}
+              onChange={(e) => handlePersonalInputChange(e, "region")}
+              editable={editablePersonal}
+            />
+          </div>
         </div>
 
         <div className="editbutton">
@@ -178,63 +203,104 @@ function Profile(props) {
         </div>
       </div>
       
-
-      <h5>Company</h5>
-      <div className="profile-info-content2">
-        <div className="profile-info-content-1">
-          <div className="profile-info-content-field">
-            <ProfileField
-                label="Company Name"
-                value={companyInfo.companyname}
-                onChange={(e) => handleCompanyInputChange(e, "companyname")}
-                editable={editableCompany}
-            />
-            <ProfileField
-                label="Company Email"
-                value={companyInfo.companyemail}
-                onChange={(e) => handleCompanyInputChange(e, "companyemail")}
-                editable={editableCompany}
-            />
-            <ProfileField
-                label="Company Cellphone"
-                value={companyInfo.companycellphone}
-                onChange={(e) => handleCompanyInputChange(e, "companycellphone")}
-                editable={editableCompany}
-            />
-            <ProfileField
-                label="Company Location"
-                value={companyInfo.companylocation}
-                onChange={(e) => handleCompanyInputChange(e, "companylocation")}
-                editable={editableCompany}
-            />
-            <ProfileField
-                label="Website URL"
-                value={companyInfo.websiteurl}
-                onChange={(e) => handleCompanyInputChange(e, "websiteurl")}
-                editable={editableCompany}
-            />
+      { userType === "clients" ? (
+        <div>
+          <h4>Company</h4>
+          <div className="company-info-content">
+            <div className="profile-info-content-1">
+              <div className="profile-info-content-field">
+                <div className="profile-info-content-field-row">
+                  <ProfileField
+                      label="Company Name"
+                      value={companyInfo.companyname}
+                      onChange={(e) => handleCompanyInputChange(e, "companyname")}
+                      editable={editableCompany}
+                  />
+                  <ProfileField
+                      label="Company Email"
+                      value={companyInfo.companyemail}
+                      onChange={(e) => handleCompanyInputChange(e, "companyemail")}
+                      editable={editableCompany}
+                  />
+                  <ProfileField
+                      label="Company Cellphone"
+                      value={companyInfo.companycellphone}
+                      onChange={(e) => handleCompanyInputChange(e, "companycellphone")}
+                      editable={editableCompany}
+                  />
+                </div>
+                <div className="profile-info-content-field-row">
+                <ProfileField
+                    label="Company Location"
+                    value={companyInfo.companylocation}
+                    onChange={(e) => handleCompanyInputChange(e, "companylocation")}
+                    editable={editableCompany}
+                />
+                <ProfileField
+                    label="Website URL"
+                    value={companyInfo.websiteurl}
+                    onChange={(e) => handleCompanyInputChange(e, "websiteurl")}
+                    editable={editableCompany}
+                />
+                </div>
+              </div>
+    
+              <div className="editbutton">
+                <PiNotePencilBold onClick={toggleEditableCompany} />
+              </div>
+            </div>
+            <div className="company-info-content-field-row">
+              <ProfileTextArea
+                      label="Company Description"
+                      value={companyInfo.companydescription}
+                      onChange={(e) => handleCompanyInputChange(e, "companydescription")}
+                      editable={editableCompany}
+                  />
+            </div>
           </div>
 
-          <div className="editbutton">
-            <PiNotePencilBold onClick={toggleEditableCompany} />
-          </div>
-        </div>
-        <ProfileTextArea
-                label="Company Description"
-                value={companyInfo.companydescription}
-                onChange={(e) => handleCompanyInputChange(e, "companydescription")}
-                editable={editableCompany}
-            />
-      </div>
+          <h4>Order Details</h4>
+          <TableContainer component={Paper} className='clients-table'>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table"> 
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={{fontWeight: 'bold'}}>Name</TableCell>
+                            <TableCell align="left" style={{fontWeight: 'bold'}}>Order ID</TableCell>
+                            <TableCell align="left" style={{fontWeight: 'bold'}}>Service Type</TableCell>
+                            <TableCell align="left" style={{fontWeight: 'bold'}}>Status</TableCell>
+                            <TableCell align="left" style={{fontWeight: 'bold'}}>Updates</TableCell>
+                        </TableRow>
+                    </TableHead>
 
-      <h5>Security</h5>
-      <div className="profile-info-content3">
-        <div className="security-info">
+
+                 { responseData &&
+                    <TableBody>
+                        {responseData.map((row, index) => (
+                            <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                <TableCell component="th" scope="row"  className="link-cell">{row.fname + " "+ row.lname}</TableCell>
+                                <TableCell align="right">{row.clientid}</TableCell>
+                                <TableCell align="right">{row.email}</TableCell>
+                                <TableCell align="right">{row.phone}</TableCell>
+                                <TableCell align="right">{row.city}</TableCell>
+                                <TableCell align="right">{row.province}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                 }
+
+                </Table>
+            </TableContainer>  
+      </div> 
+      ) : null}
+    
+      <h4>Security</h4>
+      <div className="security-info-content">
+        <div className="security-info-content-text">
           <h6>Password</h6>
-          <h7>Last changed 2 days ago</h7>
+          <h6>Last changed 2 days ago</h6>
         </div>
-        <Button className="passwordbutton" onClick={passwordModal} variant="outline-dark" size="sm">
-            <h7>Change Password</h7>
+        <Button className="passwordbutton" onClick={passwordModal} variant="dark" size="sm">
+            <h6>Change Password</h6>
         </Button>
       </div>
     </div>

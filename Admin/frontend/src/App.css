@@ -74,6 +74,7 @@ body{
     background-size: cover; /* or contain*/
     background-repeat: no-repeat;
     background-attachment: fixed;
+    overflow-x: hidden;
 }
 
 p {

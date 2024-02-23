@@ -27,7 +27,7 @@ router.get('/', (req, res) => {       //type http://localhost:3000/ in address l
 //!!!Use RESTful API rules to come up with endpoints' names
 //----------------CLIENT endpoints--------------------
 //router.get('/clients', clientController.getClients);    //when " http://localhost:3000/clients" route is called -> getClients() function from userController.js file will be executed
-//router.get('/clients/:clientId', clientController.getClientById); 
+router.get('/clients/:clientId', clientController.getClientById); 
 router.get('/client', clientController.getClient);  //get client by id, or fname, or lname.
 router.post('/clients', clientController.addNewClient);  //add new client to database (AddClientModal.jsx)
 router.get("/clients/:clientId", clientController.getClientCompanyOrderListInfo); //gets client, company, order list info for client profile page
