@@ -205,7 +205,7 @@ function OrderTimeline({orderId, loggedInEmpId}){
                 isLoading ? <p className="loading"  style={{marginTop:"5rem"}}></p> :
                 (
                     timelineData.length!=0 ? (
-                        <MDBContainer className=" scrollbar scrollbar-primary" style={{width:"110%", margin:"2.5rem", maxHeight: "600px"}}>
+                        <MDBContainer className=" scrollbar scrollbar-primary" style={{ margin:"1rem", maxHeight: "600px"}}>
                             <ul className="timeline-with-icons">
                                 {
                                     

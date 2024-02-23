@@ -45,6 +45,7 @@
     border-left: 1px solid hsl(0, 0%, 90%);
     position: relative;
     list-style: none;
+    /* width:90%; */
 }
   
 .timeline-item {
