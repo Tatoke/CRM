@@ -27,7 +27,12 @@ app.use('/companies',router ); //lists all the companies (used in addNewClientMo
 app.use('/clients', router);   //add new client to the client table
 app.use('/statuses', router); //select all the statuses from status table (Dashboard page select-option)
 app.use('/services', router)  //select all the services from service table (Dashboard page select-option)
-
+app.use('/receipt', router); //fetch the receipt table
+app.use('/invoice', router); //fetch the invoice table
+app.use('/invoices', router); // add new invoice to database
+app.use('/receipts', router); // add new receipt to database
+app.use('/receipts/:id', router); // delete receipt using receiptid from database
+app.use('/invoices/:id', router); // delete invoice using invoiceid from database
 app.use('/billing/:orderId', router); //billing info about particular order
 app.use('/timeline/:orderId', router); //gets milestones + updates + employees who  made updates with dates for an orderId
 app.use('/order/:orderId', router); //gets order details (id, client, status, service type, userEmail for request info modal)

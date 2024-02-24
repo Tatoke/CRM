@@ -55,6 +55,14 @@ router.put('/order/:orderId/status', orderController.updateOrderStatus);  //fetc
 router.delete('/orders/:orderId', orderController.deleteOrderById); 
 
 
+//----------------Billing endpoints--------------------
+router.get('/receipt', billingController.getReceipts); //fetch the receipt table
+router.get('/invoice', billingController.getInvoices); //fetch the invoice table
+router.post('/invoices', billingController.addNewInvoice); // add new invoice to database
+router.post('/receipts', billingController.addNewReceipt); // add new receipt to database
+router.delete('/receipts/:id', billingController.deleteReceipt); // delete receipt using receiptid from database
+router.delete('/invoices/:id', billingController.deleteInvoice); // delete invoice using invoiceid from database
+
 
 //----------------Milestone endpoints--------------------
 router.get('/orders/:orderId/milestones', milestoneController.getMilestonesForOrder);  

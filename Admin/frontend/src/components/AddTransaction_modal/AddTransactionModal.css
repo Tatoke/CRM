@@ -1,55 +1,70 @@
-.add-transaction-modal{
+.add-transaction-modal {
     position: fixed;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); /* Translate the modal back by half of its own width and height */
-    z-index:1001;
-    
-    /* Additional styles for the modal */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
     background-color: white;
     padding: 35px;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width:50%;
-    
-    display:flex;
+    width: 50%;
+    display: flex;
     flex-direction: column;
-  }
-  
-  
-  
-  .h5{
-      text-align: center;
-  }
-  
-  .section{
-      display:flex;   
-     
-  }
-  
-  .subsection{
-      display:flex;
-      flex-grow: 1;
-      flex-direction: column;
-      margin-bottom: 20px;
-  }
-  
+}
 
-  
-  .center-element{
-      display:flex;
-      justify-content: center;
-      margin:5px 0 20px 0;
-  
-  }
-  
-  
-  .close-btn{
-      position: absolute;
-      right: 1.3em;
-      top:1.3em;
-      cursor: pointer;
-      border-radius: 4px;
-  }
-  
+.h5 {
+    text-align: center;
+}
+
+.tsection {
+    display: flex;
+    flex-direction: column;
+}
+
+.label-input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.label-input-group label {
+    margin-bottom: 0.5rem;
+}
+
+.label-input-group input,
+.label-input-group select,
+.label-input-group textarea {
+    height: 100%;
+    width: 30%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.upload-area {
+    text-align: center;
+    margin-bottom: 1rem;
+    margin-right: 0px;
+    border: 2px dotted #7a7affd2;
+    padding: 1rem;
+    cursor: pointer;
+    color: blue;
+    margin-top: 0.5rem;
+}
+
+.center-element {
+    display: flex;
+    justify-content: center;
+    margin: 5px 0 20px 0;
+}
+
+.close-btn {
+    position: absolute;
+    right: 1.3em;
+    top: 1.3em;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+
