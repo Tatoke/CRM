@@ -14,6 +14,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import DeleteProfileModal from '../../components/DeleteProfile_modal/DeleteProfileModal.jsx';
+
 
 const ProfileField = ({ label, value, onChange, editable }) => (
   <div className="field">
@@ -58,6 +60,8 @@ function Profile(props) {
     companydescription: ""
   });
 
+  let [isDeleteProfileModalOpened, setIsDeleteProfileModalOpened] = useState(false);
+
   const [responseData, setResponseData] = React.useState(null); //data that is returned back from database
   //INGA'S NOTE FOR JUSTIN:--------------------------
   const { userType, userId } = useParams(); //userType can be either a 'client' or 'employee'. According to this info -> extract data from specified table according to the userId
@@ -97,6 +101,8 @@ function Profile(props) {
     fetchProfileData();
   }, [userId])
 
+
+
   const [editablePersonal, setEditablePersonal] = useState(false);
 
   const toggleEditablePersonal = () => {
@@ -123,16 +129,6 @@ function Profile(props) {
     });
   };
 
-  const deleteModal = () => {
-    // Displaying a simple alert message
-    alert("Modal will open to delete a client.");
-  };
-
-  const passwordModal = () => {
-    // Displaying a simple alert message
-    alert("Modal will open to change password.");
-  };
-
   return (
   <>
  
@@ -154,9 +150,10 @@ function Profile(props) {
                 <h5>{personalInfo.primaryemail}</h5>
               </div>
             </div>
-            <Button className="deletebutton" onClick={deleteModal} variant="outline-dark" size="sm">
+            <Button className="deletebutton" onClick={()=>{setIsDeleteProfileModalOpened(true)}} variant="outline-dark" size="sm">
             <h6>Delete Client</h6>
             </Button>
+            {isDeleteProfileModalOpened ? <DeleteProfileModal userType={userType} userId={userId} setIsDeleteProfileModalOpened={setIsDeleteProfileModalOpened}/> :null}
         </div>
       </div>
 
@@ -299,7 +296,7 @@ function Profile(props) {
           <h6>Password</h6>
           <h6>Last changed 2 days ago</h6>
         </div>
-        <Button className="passwordbutton" onClick={passwordModal} variant="dark" size="sm">
+        <Button className="passwordbutton" onClick={console.log("Hello")} variant="dark" size="sm">
             <h6>Change Password</h6>
         </Button>
       </div>

@@ -15,6 +15,9 @@ function RequestInfoModal({setIsRequestMoreInformationModalOpened, orderData, or
     }
 
     const handleSubmit = (e) => {
+        if (message.length === 0) {
+            return;
+        }
         alert(message)
     }
 
@@ -46,7 +49,7 @@ function RequestInfoModal({setIsRequestMoreInformationModalOpened, orderData, or
             </div>
             <h6 style={{ marginTop: '5rem', fontWeight: 'bold'}}>Message</h6>
             <form>
-                <textarea style={{ marginTop: '1rem', width: '44vw', height: '10rem' }} onChange={handleMessage} value={message} required></textarea>
+                <textarea style={{ marginTop: '1rem', width: '100%', height: '10rem' }} onChange={handleMessage} value={message} required></textarea>
                 <div style={{display:"flex", justifyContent:"center"}}>
                     <Button variant="dark" size="sm" style={{marginTop: "3rem", width:"8rem"}} type="submit" onClick={handleSubmit}>Submit</Button>
                 </div>
