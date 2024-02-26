@@ -100,6 +100,19 @@ async function addNewOrder(req, res){
 
 
 
+//3. Get all orders
+async function getAllOrders(req, res){ //gets milestones + updates + employees who  made updates with dates for an orderId
+    try {
+        const data = await db.any(`SELECT * FROM "order"`);
+        
+        res.json(data);
+        console.log(data);
+
+    } catch (err) {
+        console.error('Error fetching order details info:', err);
+        res.status(500).json({ err: 'Internal Server Error: could not fetch order details' });
+    }
+}
 
 
 
@@ -180,4 +193,4 @@ async function deleteOrderById(req, res){
 
 
 
-export default {getOrder, addNewOrder, getOrderDetails, getOrderTimeline, updateOrderStatus, deleteOrderById};
+export default {getOrder, addNewOrder, getOrderDetails, getOrderTimeline, updateOrderStatus, deleteOrderById, getAllOrders};

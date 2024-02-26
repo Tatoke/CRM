@@ -47,6 +47,7 @@ router.get('/companies', companyController.getCompanies); //lists all company na
 
 //----------------Order endpoints--------------------
 router.get('/order', orderController.getOrder); //get order by id, name, client, status etc (Dashboard, OrderDetails pages)
+router.get('/orders', orderController.getAllOrders);
 router.post('/orders', orderController.addNewOrder);  //add new order to database 
 router.get('/billing/:orderId', billingController.getOrderBilling); //billing info about particular order
 router.get('timeline/:orderId', orderController.getOrderTimeline); //gets milestones + updates + employees who  made updates with dates for an orderId

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'; //for redirecting to client profile pag
 
 import OrderTimeline from './OrderTimeline.jsx';
 import DeleteOrderModal from '../../components/DeleteOrder_modal/DeleteOrderModal.jsx';
+import RequestMoreInformationModal from '../../components/RequestInfo_modal/RequestInfoModal.jsx';
 
 
 
@@ -24,12 +25,14 @@ function OrderDetails(props){
 
      const [statuses, setStatuses] = useState([]);  //list of statuses for an order (select-option)
      const [billingData, setBillingData] = useState([]);
-     const[orderData, setOrderData] = useState({});   //doesnt include timeline 
+     const [orderData, setOrderData] = useState({});   //doesnt include timeline 
+     const [orders, setOrders] = useState({});
 
      const [selectedStatus, setSelectedStatus] = useState("");
      const [isStatusUpdated, setIsStatusUpdated] = useState(false);
 
      let [isDeleteOrderModalOpened, setIsDeleteOrderModalOpened] = useState(false);
+     let [IsRequestMoreInformationModalOpened, setIsRequestMoreInformationModalOpened] = useState(false);
 
 
 
@@ -49,7 +52,18 @@ function OrderDetails(props){
 
         }
 
+        async function fetchOrdersData(){
+            try{
+                const response = await fetch(`http://localhost:3000/orders`); //returns all statuses 
+                const data = await response.json();
+                //console.log(data);
 
+                setOrders(data);
+            } catch(err){
+                console.error('Error fetching statuses:', err); 
+            }
+
+        }
 
         async function fetchBillingData(){ //info about all invoices (including unpaid ones) and receipts
             try{
@@ -85,6 +99,7 @@ function OrderDetails(props){
         fetchStatusesData();
         fetchOrderData();
         fetchBillingData();
+        fetchOrdersData();
     }, [orderId]) //ensures that the effect is re-run whenever orderId changes.
 
 
@@ -237,8 +252,10 @@ function OrderDetails(props){
                                                 }
 
                                                 <br></br>
-                                                <Button  variant="dark" size="sm"  style={{padding:"10px", margin:"0"}}>Request More Information</Button>
+                                                <Button  variant="dark" size="sm"  style={{padding:"10px", margin:"0"} } onClick={()=>{setIsRequestMoreInformationModalOpened(true)}}>Request More Information</Button>
                                             </div>                              
+
+                                            {IsRequestMoreInformationModalOpened ? <RequestMoreInformationModal setIsRequestMoreInformationModalOpened={setIsRequestMoreInformationModalOpened} orderData={orderData} orders={orders}/> : null}
                                 </div>
                         </div>
 
