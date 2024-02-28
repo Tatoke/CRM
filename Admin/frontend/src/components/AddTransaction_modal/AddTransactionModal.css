@@ -12,6 +12,8 @@
     width: 50%;
     display: flex;
     flex-direction: column;
+    max-height: 450px; /* Adjust the value based on your design */
+    overflow-y: auto;
 }
 
 .h5 {

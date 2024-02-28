@@ -109,36 +109,49 @@ async function getInvoices(req, res) {
     }
 }
 
-async function addNewInvoice(req, res){
-    try {
-        const newInvoiceData = req.body; 
-        
-        // Insert new client data into the client table
-        await db.none('INSERT INTO invoice (orderid, duedate, invoicedate, amountdue, attachment) VALUES ($1, $2, $3, $4, $5)',
-                       [newInvoiceData.orderID, newInvoiceData.dueDate, newInvoiceData.invoiceDate, newInvoiceData.amount, newInvoiceData.attachments]);
-        
-        res.status(201).json({ message: 'Invoice added successfully', data: newInvoiceData });
+async function addNewInvoice(req, res) {
+  try {
+      const newInvoiceData = req.body;
 
-      } catch (error) {
-        console.error('Error adding Invoice:', error);
-        res.status(500).json({ message: 'Failed to add Invoice' });
-      }
+      // Get the current maximum invoiceid
+      const maxInvoiceId = await db.one('SELECT MAX(invoiceid) FROM invoice');
+
+      // Increment the invoiceid by 1
+      const newInvoiceId = maxInvoiceId.max + 1;
+
+      // Insert new invoice data into the invoice table with the incremented invoiceid
+      await db.none('INSERT INTO invoice (invoiceid, orderid, duedate, invoicedate, amountdue, attachment) VALUES ($1, $2, $3, $4, $5, $6)',
+          [newInvoiceId, newInvoiceData.orderID, newInvoiceData.dueDate, newInvoiceData.invoiceDate, newInvoiceData.amount, newInvoiceData.attachments]);
+
+      res.status(201).json({ message: 'Invoice added successfully', data: newInvoiceData });
+
+  } catch (error) {
+      console.error('Error adding Invoice:', error);
+      res.status(500).json({ message: 'Failed to add Invoice' });
+  }
 }
 
-async function addNewReceipt(req, res){
-    try {
-        const newReceiptData = req.body; 
-        
-        // Insert new client data into the client table
-        await db.none('INSERT INTO receipt (invoiceid, paymentdate, amountpaid, attachment) VALUES ($1, $2, $3, $4)',
-                       [newReceiptData.invoiceID, newReceiptData.paymentDate, newReceiptData.amount, newReceiptData.attachments]);
-        
-        res.status(201).json({ message: 'Receipt added successfully', data: newReceiptData });
 
-      } catch (error) {
-        console.error('Error adding Receipt:', error);
-        res.status(500).json({ message: 'Failed to add Receipt' });
-      }
+async function addNewReceipt(req, res) {
+  try {
+      const newReceiptData = req.body;
+
+      // Get the current maximum receiptid
+      const maxReceiptId = await db.one('SELECT MAX(receiptid) FROM receipt');
+
+      // Increment the receiptid by 1
+      const newReceiptId = maxReceiptId.max + 1;
+
+      // Insert new client data into the client table with the incremented receiptid
+      await db.none('INSERT INTO receipt (receiptid, invoiceid, paymentdate, amountpaid, attachment) VALUES ($1, $2, $3, $4, $5)',
+          [newReceiptId, newReceiptData.invoiceID, newReceiptData.paymentDate, newReceiptData.amount, newReceiptData.attachments]);
+
+      res.status(201).json({ message: 'Receipt added successfully', data: newReceiptData });
+
+  } catch (error) {
+      console.error('Error adding Receipt:', error);
+      res.status(500).json({ message: 'Failed to add Receipt' });
+  }
 }
 
 async function deleteReceipt(req, res) {

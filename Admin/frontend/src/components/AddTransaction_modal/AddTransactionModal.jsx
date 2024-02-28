@@ -203,7 +203,7 @@ function AddTransaction({ closeModal }) {
                 onChange={handleFileChange}
                 id='myFile'
                 name='myFile'
-                className='upload-input'
+                className='upload-input' 
                 style={{ borderStyle: 'none' }}
               />
             </div>

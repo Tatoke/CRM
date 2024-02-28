@@ -169,11 +169,11 @@ function Finances(props) {
             <option value="Invoice">Invoice</option>
             <option value="Receipt">Receipt</option>
           </select>
-          <Button type="submit" variant="dark" size="sm" style={{ width: '90px' }}>
+          <Button type="submit" variant="dark" size="sm" style={{ width: '90px', position: 'absolute', right: '95px', top: '265px'}}>
             Search
           </Button>
 
-          <Button onClick={openModal} variant="outline-dark" size="sm" style={{ position: 'absolute', right: '120px' }}>
+          <Button onClick={openModal} variant="outline-dark" size="sm" style={{ position: 'absolute', right: '120px', top: '180px'}}>
             Add Transaction
           </Button>
         </div>
