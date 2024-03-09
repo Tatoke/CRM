@@ -40,11 +40,12 @@ app.use('/order/:orderId', router); //gets order details (id, client, status, se
 
 
 app.use('/employees/:employeeId', router); //gets all info about particular employee and orders that he works on (for Profile page)
+app.use('/employee', router); // fetch the employee table
+app.use('/employees', router); //add new employee to the employee table
+app.use('/employees/:id', router); // delete employee using employeeid from database
+
 app.use('/clients/:clientId', router); //gets client, company, order list info for client profile page
-
 app.use('/order/:orderId/status', router); //updates order status
-
-
 app.use('/orders/:orderId/milestones', router);  
 app.use('/milestones/:milestoneId', router); 
 app.use('/updates', router); //add new update to Update table (or select all updates)

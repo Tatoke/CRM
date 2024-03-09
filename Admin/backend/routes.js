@@ -37,7 +37,9 @@ router.get("/clients/:clientId", clientController.getClientCompanyOrderListInfo)
 //router.post('/employee/login', employeeController.loginEmployee); 
 //router.post('/employee/logout', employeeController.logoutEmployee); 
 router.get('/employee/:employeeId', employeeController.getEmployeeOrderInfo); //gets all info about particular employee and orders that he works on (for Profile page)
-
+router.get('/employee', employeeController.getEmployee);  //get employee by id, or fname, or lname.
+router.post('/employees', employeeController.addNewEmployee);  //add new employee to database
+router.delete('/employees/:id', employeeController.deleteEmployee); // delete employee using employeeid from database
 
 
 //----------------Company endpoints--------------------
