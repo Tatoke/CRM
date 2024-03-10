@@ -128,7 +128,7 @@ function Roles(props) {
 
         {/* MODAL: shows conditionally */}
         {showAddEmployeeModal && <AddEmployeeModal closeModal={closeModal} fetchData={fetchData} />}
-        <DeleteEmployeeModal {...deleteModalProps} />;
+        <DeleteEmployeeModal {...deleteModalProps} />
 
       <TableContainer component={Paper} className="employee-table">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -140,7 +140,7 @@ function Roles(props) {
                   <TableCell align="right" style={{ fontWeight: 'bold' }}>Phone</TableCell>
                   <TableCell align="right" style={{ fontWeight: 'bold' }}>City</TableCell>
                   <TableCell align="right" style={{ fontWeight: 'bold' }}>Province</TableCell>
-                  <TableCell align="right" style={{ fontWeight: 'bold' }}>Roles</TableCell>
+                  <TableCell align="right" style={{ fontWeight: 'bold' }}>Role</TableCell>
             </TableRow>
           </TableHead>
 

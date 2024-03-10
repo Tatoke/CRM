@@ -180,7 +180,7 @@ function Finances(props) {
       </form>
 
       {showAddTransactionDialog && <AddTransactionModal closeModal={closeModal} />}
-      <DeleteTransactionModal {...deleteModalProps} />;
+      <DeleteTransactionModal {...deleteModalProps} />
 
       <TableContainer component={Paper} className="finances-table">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">

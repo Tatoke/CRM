@@ -1,0 +1,14 @@
+.delete-service-modal{
+    text-align: center;
+}
+
+
+.delete-service-buttons{
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.delete-service-button{
+    padding:0.3rem 2rem;
+}

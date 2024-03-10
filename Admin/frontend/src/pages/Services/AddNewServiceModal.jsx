@@ -16,7 +16,13 @@ function AddNewServiceModal({setIsNewServiceModalOpened}){
 
     async function handleSubmit(e){
         //e.preventDefault();
-        console.log(formData);
+        //console.log(formData.image);
+        // const formdata = new FormData();
+        // formdata.append('name', formData.name); // Add other form data
+        // formdata.append('description', formData.description); // Add other form data
+        // formdata.append('image', formData.image); // Add file data
+
+
 
         try {
             const response = await fetch('http://localhost:3000/services', {
@@ -54,13 +60,9 @@ function AddNewServiceModal({setIsNewServiceModalOpened}){
 
 
     function handleFileChange(e){
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const base64Data = e.target.result.split(',')[1];
-            setFormData({ ...formData, image: base64Data });
-        };
-        reader.readAsDataURL(file);
+        const file = e.target.files[0]; //File object
+        //console.log(file);
+        setFormData({ ...formData, image: file });
     }
 
 

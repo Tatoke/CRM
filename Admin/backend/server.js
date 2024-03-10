@@ -1,6 +1,7 @@
 import express from 'express';
 import router from "./routes.js"    
 import cors from 'cors';
+import bodyParser from 'body-parser';
 //NEED TO KEEP THIS FILE AS CLEAN AS POSSIBLE
 
 
@@ -12,6 +13,11 @@ const port = 3000;
 //-------MIDDLEWARE (placement of this matters!)---------
 app.use(express.json());  //same as body-parser (used to parse incoming JSON requests eg get data from inout fields,  and make the parsed data available in the request.body object )
 app.use(cors()); // !Enable CORS for all routes (allows for frontend to connect to backend from any port, like 5173)
+// Increase request size limit (e.g., 50MB)
+app.use(bodyParser.json({ limit: '1000mb' }));
+app.use(bodyParser.urlencoded({ limit: '1000mb', extended: true }));
+
+
 
 
 
@@ -49,8 +55,10 @@ app.use('/order/:orderId/status', router); //updates order status
 app.use('/orders/:orderId/milestones', router);  
 app.use('/milestones/:milestoneId', router); 
 app.use('/updates', router); //add new update to Update table (or select all updates)
-app.use('/orders/:orderId', router); //delete otder by id
+app.use('/orders/:orderId', router); //delete order by id
+
 app.use('/services', router);   //add new service to table
+app.use('/services/:serviceId', router);   //edit existing service (patch)
 
 
 
@@ -58,3 +66,9 @@ app.use('/services', router);   //add new service to table
 app.listen(port, () => {
  console.log(`Server is running on http://localhost:${port}`);
 });
+
+
+
+
+
+

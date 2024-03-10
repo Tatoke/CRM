@@ -2,6 +2,10 @@
 //watch video from notes.txt
 import express from 'express';
 const router = express.Router();
+import upload from '../backend/src/configs/multer-setup.js';
+
+
+
 //IMPORT CONTROLLERS:
 import clientController from './src/controllers/clientController.js';  //set of functions to work with Clients table
 import employeeController from './src/controllers/employeeController.js';  //set of functions to work with employees
@@ -87,9 +91,9 @@ router.get('/statuses', statusController.getStatuses); //lists all statuses (Das
 
 //----------------SERVICE endpoints--------------------
 router.get('/services', serviceController.getServices); //lists all statuses (Dashboard select-option )
-router.post('/services', serviceController.addNewService); 
-
-
+router.post('/services', upload.single('image'), serviceController.addNewService); 
+router.patch('/services/:serviceId', serviceController.editService);   
+router.delete('/services/:serviceid', serviceController.deleteService);  
 
 
 
