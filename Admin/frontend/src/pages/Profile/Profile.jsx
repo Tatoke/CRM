@@ -43,6 +43,8 @@ const ProfileTextArea = ({ label, value, onChange, editable }) => (
 
 function Profile(props) {
 
+  const [deleteModalProps, setDeleteModalProps] = useState({ show: false });
+
   const [personalInfo, setPersonalInfo] = useState({
     fullName: "",
     primaryemail: "",
@@ -60,9 +62,8 @@ function Profile(props) {
     companydescription: ""
   });
 
-  let [isDeleteProfileModalOpened, setIsDeleteProfileModalOpened] = useState(false);
-
   const [responseData, setResponseData] = React.useState(null); //data that is returned back from database
+
   //INGA'S NOTE FOR JUSTIN:--------------------------
   const { userType, userId } = useParams(); //userType can be either a 'client' or 'employee'. According to this info -> extract data from specified table according to the userId
   //use useEffect() React hook in this component to make a request to backend.
@@ -74,7 +75,7 @@ function Profile(props) {
       try {
         const response = await fetch(`http://localhost:3000/${userType}/${userId}`);
         const data = await response.json();
-        if (userType === "employees") {
+        if (userType === "employee") {
           setPersonalInfo({
             ...personalInfo,
             fullName: data[0].fname + " " + (data[0].mname ? " " + data[0].mname : "") + " " + data[0].lname, // Update fullName with the fetched data
@@ -92,7 +93,6 @@ function Profile(props) {
             city: data.city,
             region: data.province
           });
-          const response = await fetch(`http://localhost:3000/${userType}/${userId}`);
         }
       } catch (err){
         console.error(`Error fetching statuses:`, err)
@@ -100,8 +100,6 @@ function Profile(props) {
     }
     fetchProfileData();
   }, [userId])
-
-
 
   const [editablePersonal, setEditablePersonal] = useState(false);
 
@@ -129,10 +127,36 @@ function Profile(props) {
     });
   };
 
+  const handleDelete = async (type,id) => {
+    try {
+      // Open the DeleteTransactionModal with the appropriate props
+      setDeleteModalProps({
+        show: true,
+        onDelete: async () => {
+          const response = await fetch(`http://localhost:3000/${type}/${id}`, {
+            method: 'DELETE',
+          });
+  
+          console.log(`${type} ${id} has been deleted`)
+          if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`Failed to delete ${type}: ${errorMessage}`);
+          }
+  
+          console.log(`${type} deleted successfully`);
+          // After deletion, fetch data again
+        },
+        closeModal: () => {
+          setDeleteModalProps({ ...deleteModalProps, show: false });
+        },
+      });
+    } catch (err) {
+      console.error(`Error deleting ${type}:`, err.message);
+    }
+  };
+
   return (
   <>
- 
-
     <div className="container">
       <div className="profile">
       { userType === "clients" ? (
@@ -150,10 +174,10 @@ function Profile(props) {
                 <h5>{personalInfo.primaryemail}</h5>
               </div>
             </div>
-            <Button className="deletebutton" onClick={()=>{setIsDeleteProfileModalOpened(true)}} variant="outline-dark" size="sm">
+            <Button className="deletebutton"  onClick={() => handleDelete(userType, userId)} variant="outline-dark" size="sm">
             <h6>Delete Client</h6>
             </Button>
-            {isDeleteProfileModalOpened ? <DeleteProfileModal userType={userType} userId={userId} setIsDeleteProfileModalOpened={setIsDeleteProfileModalOpened}/> :null}
+            <DeleteProfileModal {...deleteModalProps} />;
         </div>
       </div>
 
@@ -296,7 +320,7 @@ function Profile(props) {
           <h6>Password</h6>
           <h6>Last changed 2 days ago</h6>
         </div>
-        <Button className="passwordbutton" onClick={console.log("Hello")} variant="dark" size="sm">
+        <Button className="passwordbutton" variant="dark" size="sm">
             <h6>Change Password</h6>
         </Button>
       </div>
