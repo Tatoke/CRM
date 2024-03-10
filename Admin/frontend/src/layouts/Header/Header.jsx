@@ -44,7 +44,7 @@ function Header(){   //HOLDS INFO ABOUT epmloyeeId logged in
                            {/* SUBMENU for Avatar Icon*/}
                             <ul className="submenu">
                                 {/* the endpoint opens profile page customized for employee */}
-                                <li className="subitem top"><Link to="/profile/employee/:userId">My Profile</Link></li> 
+                                <li className="subitem top"><Link to="/profile/employee/1">My Profile</Link></li> 
 
                                 <li className="subitem "><Link to="/roles">Roles</Link></li>     
                                 <li className="subitem bottom"><Link to="/logout">Logout</Link></li>   
