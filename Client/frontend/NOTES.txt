@@ -1,0 +1,8 @@
+For each page in 'pages' folder there must be a .css and .jsx file
+
+Components: is something we will reuse (chunk of html code) again and again.
+
+Modals: they go inside component folder! Modals don't redirect to other pages!! Modals open in the same page
+
+Layouts: constant repeatable chunks of code on every page (like navbar, footer) are placed in 'layouts' folder
+

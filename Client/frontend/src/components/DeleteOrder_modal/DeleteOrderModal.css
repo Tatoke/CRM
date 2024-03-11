@@ -1,0 +1,14 @@
+.delete-order-modal{
+    text-align: center;
+}
+
+
+.delete-order-buttons{
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.delete-order-button{
+    padding:0.3rem 2rem;
+}

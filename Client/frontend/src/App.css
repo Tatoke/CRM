@@ -1,0 +1,210 @@
+/* STYLES FOR THE WHOLE PROJECT (ALL THE PAGES) */
+
+/* ============= GLOBAL CSS =============== */
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+}
+
+:root{
+   /* COLORS */
+   --primary-500: #645cff;
+   --primary-black: #2A2828;
+   --primary-green: #59BE9C;
+   --primary-yellow:#FFEA9D;
+   --primary-blue: #4270C9;
+   --light-blue: #F0F3FF;
+
+  /* grey */
+  --grey-50: #f8fafc;
+  --grey-100: #f1f5f9;
+  --grey-200: #e2e8f0;
+  --grey-300: #cbd5e1;
+  --grey-400: #94a3b8;
+  --grey-500: #64748b;
+  --grey-600: #475569;
+  --grey-700: #334155;
+  --grey-800: #1e293b;
+  --grey-900: #0f172a;
+
+  /* rest of the colors */
+  --black: #222;
+  --white: #fff;
+  
+
+
+  --small-text: 0.875rem;
+  --extra-small-text: 0.7em;
+
+  --textColor: var(--grey-900);
+  --borderRadius: 0.25rem;
+  --letterSpacing: 0.5px;
+  --transition: 0.3s ease-in-out all;
+
+
+   /* box shadow*/
+   --shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+   --shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+   --shadow-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
+   --shadow-4: 0 20px 25px -5px rgba(0, 0, 0, 0.1),0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+   /* font weights*/
+   --light:300;
+   --medium:400;
+   --bold:500;
+}
+
+
+
+body{
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: var(--medium);
+    line-height: 1.4;
+    color: var(--textColor);
+    background-image: url('./assets/images/background1.png');
+    background-size: cover; /* or contain*/
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+p {
+    margin: 0;
+    color: var(--textColor);
+}
+
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.page-layout{
+  margin:2.5rem 5rem;
+  padding:1rem;
+}
+
+/* ----LOADING COMPONENT -------------*/
+@keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+.loading {
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid var(--grey-400);
+    border-radius: 50%;
+    border-top-color: var(--primary-500);
+    animation: spinner 0.6s linear infinite;
+    margin: 0 auto;
+}
+/* ----END OF LOADING COMPONENT -------- */
+
+
+
+
+
+/* INPUT TEXT STYLES */
+input, textarea, select{
+  border: 1px solid #ccc;
+  border-width: 1px;
+  border-radius: 7px;
+  padding-left:  0.7rem;
+  height: 1.8rem;
+  margin-top: 5px;
+  
+  height:1.9rem;
+}
+
+
+label{
+  padding-left:3px;
+}
+
+
+
+/* 
+IF WANT TEXT BEHAVE LIKE A LINK: */
+.link-cell {
+  cursor: pointer; /* Show pointer cursor on hover */
+  text-decoration: underline; /* Underline the text */
+}
+
+/* Remove default link styles for table cells */
+.link-cell:hover, .link-cell:active {
+  text-decoration: none;
+  color: #007bff;
+}
+
+/* Style the link-like table cell when hovered */
+.link-cell:hover {
+  color: darkblue; /* Darken text color on hover */
+}
+
+
+
+
+.custom-link{
+  text-decoration: underline;
+  color: #007bff;
+  font-weight: bold;
+  padding: 0;
+  font-weight: 400;
+
+}
+.custom-link:hover{
+  color: var(--textColor);
+}
+
+h4{
+  margin-bottom: 2.7rem;
+}
+
+
+
+
+.overlay{
+  z-index:0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black color */
+  z-index: 1000; /* Ensure it's on top of everything else */
+}
+
+
+.universal-modal{
+  position: fixed;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); /* Translate the modal back by half of its own width and height */
+  z-index:1001;
+  
+  /* Additional styles for the modal */
+  background-color: white;
+  padding: 35px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width:50%;
+  
+  display:flex;
+  flex-direction: column;
+}

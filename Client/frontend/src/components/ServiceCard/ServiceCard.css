@@ -1,0 +1,53 @@
+.service-card{
+    width: 30%;
+    position: relative;
+    margin-bottom: 2.3rem;
+    margin:1rem;
+    
+}
+
+
+.service-card-id{
+    position: absolute;
+    right:0;
+    top:0;
+
+    padding: 0.7rem;
+    background-color: #651fff;
+    border-bottom-left-radius: 5px;
+    padding: 0.4rem;
+    color: white;
+    text-transform: capitalize;
+}
+
+
+
+.service-edit-label{
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+
+
+
+
+
+
+
+/* CSS for customizing the scrollbar */
+textarea::-webkit-scrollbar {
+    width: 7px; /* Set the width of the scrollbar */
+  }
+  
+  textarea::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Set the background color of the scrollbar track */
+  }
+  
+  textarea::-webkit-scrollbar-thumb {
+    background: #651fff; /* Set the color of the scrollbar thumb */
+    border-radius: 2px; /* Set the border radius of the scrollbar thumb */
+  }
+  
+  textarea::-webkit-scrollbar-thumb:hover {
+    background: #32009d; /* Set the color of the scrollbar thumb on hover */
+  }

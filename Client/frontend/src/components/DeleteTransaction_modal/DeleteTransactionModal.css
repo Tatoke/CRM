@@ -1,0 +1,14 @@
+.delete-transaction-modal{
+    text-align: center;
+}
+
+
+.delete-transaction-buttons{
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.delete-transaction-button{
+    padding:0.3rem 2rem;
+}

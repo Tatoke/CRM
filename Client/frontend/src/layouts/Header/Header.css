@@ -1,0 +1,122 @@
+.header {
+    width: 100vw;
+    height: 5rem;
+    padding: 0 3rem;
+    font-size: 16px;
+
+    display: flex;
+    justify-content:space-between;
+    flex-wrap: nowrap;
+    background: #222;
+    align-items: center;
+    color: white;
+    font-weight: 300;
+    z-index:1000;
+}
+
+.logo{
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+a, .left, li {
+    color: white;
+    padding: 15px 10px;
+}
+
+
+a:hover{
+    color: #ccc;
+    transition: 0.25s ease-in-out all;
+}
+
+
+
+
+
+
+
+/* Desktop menu */
+/* @media all and (min-width: 960px) { */
+    .username{
+        font-size: 0.8rem;
+        font-weight: 100;
+    }
+
+    .email{
+        font-size: 0.8rem;
+        font-weight: 100;
+    }
+
+
+    .center, .right {
+        margin-bottom:0px;
+        display: flex;
+        align-items: center;
+        /* height: 100%; */
+    }
+
+    
+    /* to make sure submenu doesnt disappear */
+    .avatar, .notification{
+        height: 100%;
+        
+    }
+    .avatar a , .notification a{
+        display: block;
+        height: 100%;
+
+        /* may need to change this */
+        /* padding-top: 1.7rem;  */
+    }
+   
+
+
+    /* SUBMENU: */
+   .submenu{
+        /* display: none; */
+        opacity: 0;
+        visibility: hidden;
+
+        position: absolute;
+        top: 4rem;
+        background: #222;
+        border-radius: 6.5px;
+        display:block;
+        border: 2px solid #cccccc26;
+        transition: transform 0.4s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    .has-submenu:hover .submenu{
+        opacity:1;
+        visibility:visible;
+    }
+
+
+    .submenu li{
+        display: block;
+        padding: 5px;
+        margin: 0px;
+        width:125px;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+    .submenu li{
+        padding:4px;
+    }
+
+    .subitem.top a{
+        border-top-left-radius: 6.5px;
+        border-top-right-radius: 6.5px;
+    }
+
+    .subitem.bottom a{
+        border-bottom-left-radius: 6.5px;
+        border-bottom-right-radius: 6.5px;
+    }
+
+    .submenu a:hover{
+        background-color: rgba(51, 51, 51, 0.696)
+    }
+
+/* } */

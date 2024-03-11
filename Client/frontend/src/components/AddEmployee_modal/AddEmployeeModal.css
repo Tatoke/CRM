@@ -1,0 +1,46 @@
+
+
+.h4{
+    text-align: center;
+}
+
+.section{
+    display:flex;   
+   
+}
+
+.subsection{
+    display:flex;
+    flex-grow: 1;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.overlay{
+    z-index:0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black color */
+    z-index: 1000; /* Ensure it's on top of everything else */
+}
+
+.center-element{
+    display:flex;
+    justify-content: center;
+    margin:5px 0 20px 0;
+
+}
+
+
+.close-btn{
+    position: absolute;
+    right: 1.3em;
+    top:1.3em;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+

@@ -1,0 +1,14 @@
+.delete-employee-modal{
+    text-align: center;
+}
+
+
+.delete-employee-buttons{
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.delete-employee-button{
+    padding:0.3rem 2rem;
+}
