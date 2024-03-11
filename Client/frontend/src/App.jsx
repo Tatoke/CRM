@@ -30,7 +30,7 @@ function App() {
 
               <Route index element={<Home />} />
               {/* userTyoe can be either "employee" or "client" */}
-
+              <Route path="profile/client/:userId" element={<Profile />} /> 
           </Route>
 
 

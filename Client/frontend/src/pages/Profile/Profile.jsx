@@ -62,10 +62,11 @@ function Profile(props) {
     companydescription: ""
   });
 
-  const [responseData, setResponseData] = React.useState(null); //data that is returned back from database
+  const [responseData, setresponseData] = React.useState(null); //data that is returned back from database
 
   //INGA'S NOTE FOR JUSTIN:--------------------------
-  const { userType, userId } = useParams(); //userType can be either a 'client' or 'employee'. According to this info -> extract data from specified table according to the userId
+  const { userId }= useParams();
+  //userType can be either a 'client' or 'employee'. According to this info -> extract data from specified table according to the userId
   //use useEffect() React hook in this component to make a request to backend.
   //will have to use if-else to parse appropriate endpoint (either one to parse client table or to parse employee table)
   //use conditional rendering: if user if Employee => dont show company and list of orders.
@@ -73,18 +74,8 @@ function Profile(props) {
   useEffect(()=>{
     async function fetchProfileData(){
       try {
-        const response = await fetch(`http://localhost:3000/${userType}/${userId}`);
+        const response = await fetch(`http://localhost:3000/client/${userId}`);
         const data = await response.json();
-        if (userType === "employee") {
-          setPersonalInfo({
-            ...personalInfo,
-            fullName: data[0].fname + " " + (data[0].mname ? " " + data[0].mname : "") + " " + data[0].lname, // Update fullName with the fetched data
-            primaryemail: data[0].email,
-            primarycellphone: data[0].phone,
-            city: data[0].city,
-            region: data[0].province
-          });
-        } else {
           setPersonalInfo({
             ...personalInfo,
             fullName: data.fname + " " + (data.mname ? " " + data.mname : "") + " " + data.lname, // Update fullName with the fetched data
@@ -92,8 +83,8 @@ function Profile(props) {
             primarycellphone: data.phone,
             city: data.city,
             region: data.province
+            
           });
-        }
       } catch (err){
         console.error(`Error fetching statuses:`, err)
       }
@@ -127,43 +118,11 @@ function Profile(props) {
     });
   };
 
-  const handleDelete = async (type,id) => {
-    try {
-      // Open the DeleteTransactionModal with the appropriate props
-      setDeleteModalProps({
-        show: true,
-        onDelete: async () => {
-          const response = await fetch(`http://localhost:3000/${type}/${id}`, {
-            method: 'DELETE',
-          });
-  
-          console.log(`${type} ${id} has been deleted`)
-          if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(`Failed to delete ${type}: ${errorMessage}`);
-          }
-  
-          console.log(`${type} deleted successfully`);
-          // After deletion, fetch data again
-        },
-        closeModal: () => {
-          setDeleteModalProps({ ...deleteModalProps, show: false });
-        },
-      });
-    } catch (err) {
-      console.error(`Error deleting ${type}:`, err.message);
-    }
-  };
-
   return (
   <>
     <div className="container">
       <div className="profile">
-      { userType === "clients" ? (
-        <h4>Client / Profile Details</h4>
-      ) : (
-        <h4>Employee / Profile Details</h4>
-      )}
+        <h4>Profile</h4>
         <div className="profile-info-header">
             <div className="profile-info-header-container">
               <div className="profile-picture">
@@ -174,10 +133,6 @@ function Profile(props) {
                 <h5>{personalInfo.primaryemail}</h5>
               </div>
             </div>
-            <Button className="deletebutton"  onClick={() => handleDelete(userType, userId)} variant="outline-dark" size="sm">
-            <h6>Delete Client</h6>
-            </Button>
-            <DeleteProfileModal {...deleteModalProps} />;
         </div>
       </div>
 
@@ -224,7 +179,6 @@ function Profile(props) {
         </div>
       </div>
       
-      { userType === "clients" ? (
         <div>
           <h4>Company</h4>
           <div className="company-info-content">
@@ -278,41 +232,8 @@ function Profile(props) {
                       editable={editableCompany}
                   />
             </div>
-          </div>
-
-          <h4>Order Details</h4>
-          <TableContainer component={Paper} className='clients-table'>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table"> 
-                    <TableHead>
-                        <TableRow>
-                            <TableCell style={{fontWeight: 'bold'}}>Name</TableCell>
-                            <TableCell align="left" style={{fontWeight: 'bold'}}>Order ID</TableCell>
-                            <TableCell align="left" style={{fontWeight: 'bold'}}>Service Type</TableCell>
-                            <TableCell align="left" style={{fontWeight: 'bold'}}>Status</TableCell>
-                            <TableCell align="left" style={{fontWeight: 'bold'}}>Updates</TableCell>
-                        </TableRow>
-                    </TableHead>
-
-
-                 { responseData &&
-                    <TableBody>
-                        {responseData.map((row, index) => (
-                            <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell component="th" scope="row"  className="link-cell">{row.fname + " "+ row.lname}</TableCell>
-                                <TableCell align="right">{row.clientid}</TableCell>
-                                <TableCell align="right">{row.email}</TableCell>
-                                <TableCell align="right">{row.phone}</TableCell>
-                                <TableCell align="right">{row.city}</TableCell>
-                                <TableCell align="right">{row.province}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                 }
-
-                </Table>
-            </TableContainer>  
+        </div>
       </div> 
-      ) : null}
     
       <h4>Security</h4>
       <div className="security-info-content">
