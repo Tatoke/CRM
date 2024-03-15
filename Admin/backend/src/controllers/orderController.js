@@ -33,11 +33,16 @@ async function getOrder(req, res){
 
          // Construct the WHERE clause using the conditions array
          const whereClause = conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : '';
-         const query = `SELECT o.orderid, o.name AS orderName, c.clientid, c.fname, c.lname, s.name AS serviceName, st.name AS statusName, o.balance, o.createdat
+         const query = `SELECT o.orderid, o.name AS orderName, c.clientid, c.fname, c.lname, s.name AS serviceName, st.name AS statusName,  SUM(i.amountdue) - COALESCE(SUM(r.amountpaid), 0) AS balance, o.createdat
          FROM 
          "order" o INNER JOIN client c ON o.clientid = c.clientid
          INNER JOIN status st ON o.statusid = st.statusId
-         INNER JOIN service s ON o.serviceid = s.serviceid  ${whereClause}`; // Construct the query
+         INNER JOIN service s ON o.serviceid = s.serviceid
+         LEFT JOIN invoice i ON o.orderid = i.orderid
+         LEFT JOIN receipt r ON i.invoiceid = r.invoiceid
+         ${whereClause}
+         GROUP BY o.orderid, o.name, c.clientid, c.fname, c.lname, s.name, st.name, o.createdat
+         `; // Construct the query
         console.log(query);
 
         const order = await db.any(query, [orderId, orderName, fName, lName, serviceType, status ]);
